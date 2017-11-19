@@ -1,0 +1,8 @@
+# E3
+ifconfig eth0 192.168.5.10/24
+
+# I3
+ifconfig eth1 192.168.6.10/24
+
+# Redirection vers internet par défaut
+route add default gw 192.168.5.10
