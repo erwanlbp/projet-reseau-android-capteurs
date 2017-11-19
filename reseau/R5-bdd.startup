@@ -1,0 +1,7 @@
+# E5
+ifconfig eth0 192.168.9.10/24
+
+# I5
+ifconfig eth1 192.168.10.10/24
+
+route add default gw 192.168.10.10
