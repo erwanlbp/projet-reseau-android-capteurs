@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">SmartHouse</string>
     <string name="add">Add ...</string>
+    <string name="capteur_name">Capteur name</string>
+    <string name="capteur_type">Capteur type</string>
+    <string name="capteur_started">Started ?</string>
+    <string name="save">Save</string>
 </resources>

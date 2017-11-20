@@ -1,17 +1,17 @@
 package fr.eisti.smarthouse.model;
 
-import android.content.ContentValues;
+import com.google.firebase.database.DataSnapshot;
 
 /**
  * Created by ErwanLBP on 20/11/17.
  */
 
 public class Capteur {
-    public static final String NAME = "NAME";
+    public static final String NAME = "name";
     private String name;
-    public static final String TYPE = "TYPE";
+    public static final String TYPE = "type";
     private String type;
-    public static final String ACTIV = "ACTIV";
+    public static final String ACTIV = "activ";
     private boolean activ;
 
     public Capteur(String name, String type, boolean activ) {
@@ -21,6 +21,7 @@ public class Capteur {
     }
 
     public Capteur() {
+        this(null, null, false);
     }
 
     public String getName() {
@@ -52,17 +53,11 @@ public class Capteur {
         return "[" + name + "] " + type + " " + (activ ? "ON" : "OFF");
     }
 
-    public ContentValues asContentValues() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(NAME, name);
-        contentValues.put(TYPE, type);
-        contentValues.put(ACTIV, activ);
-        return contentValues;
-    }
-
-    public static Capteur fromContentValues(ContentValues contentValues) {
-        if (contentValues == null)
-            return null;
-        return new Capteur(contentValues.getAsString(NAME), contentValues.getAsString(TYPE), contentValues.getAsBoolean(ACTIV));
+    public static Capteur fromDataSnapshot(DataSnapshot dataSnapshot) {
+        Capteur capteur = new Capteur();
+        capteur.setName((String) dataSnapshot.child(NAME).getValue());
+        capteur.setType((String) dataSnapshot.child(TYPE).getValue());
+        capteur.setActiv((boolean) dataSnapshot.child(ACTIV).getValue());
+        return capteur;
     }
 }
