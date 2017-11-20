@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "952034138705",
+    "firebase_url": "https://smarthouse-31e81.firebaseio.com",
+    "project_id": "smarthouse-31e81",
+    "storage_bucket": "smarthouse-31e81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952034138705:android:39d60879c5830efa",
+        "android_client_info": {
+          "package_name": "fr.eisti.smarthouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952034138705-emgglifd597sb0mfmam03nl4k8hcfup8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.eisti.smarthouse",
+            "certificate_hash": "646ab61556f7642224bc207a9f4e904f8a4b64d8"
+          }
+        },
+        {
+          "client_id": "952034138705-fgkvfst5coj2e1os4ptfbmvjbfghc2fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAifGIvnU_bk7I41V-T-h4l1sKnAQf8kw0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952034138705-fgkvfst5coj2e1os4ptfbmvjbfghc2fs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
