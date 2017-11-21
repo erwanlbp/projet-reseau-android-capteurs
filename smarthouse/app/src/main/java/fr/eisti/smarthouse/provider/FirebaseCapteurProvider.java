@@ -29,8 +29,7 @@ public class FirebaseCapteurProvider {
 
     private static final String NODE_CAPTEURS = "capteurs";
 
-    public FirebaseCapteurProvider() {
-        // TODO [REMOVE]
+    static {
         FirebaseAuth.getInstance().signInAnonymously();
     }
 

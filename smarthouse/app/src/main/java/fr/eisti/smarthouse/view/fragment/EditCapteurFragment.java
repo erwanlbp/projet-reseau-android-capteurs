@@ -49,7 +49,8 @@ public class EditCapteurFragment extends Fragment implements View.OnClickListene
 
         btnEdit.setOnClickListener(this);
 
-        presenter.findInfos(capteurName);
+        if (capteurName != null)
+            presenter.findInfos(capteurName);
 
         return view;
     }
