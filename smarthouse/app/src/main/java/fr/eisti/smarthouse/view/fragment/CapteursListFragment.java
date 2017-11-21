@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import fr.eisti.smarthouse.model.Capteur;
 import fr.eisti.smarthouse.presenter.CapteursListPresenter;
 import fr.eisti.smarthouse.view.CapteursListAdapter;
 import fr.eisti.smarthouse.view.activity.EditCapteurActivity;
+import fr.eisti.smarthouse.view.activity.SignInActivity;
 
 /**
  * Created by ErwanLBP on 20/11/17.
@@ -42,6 +45,10 @@ public class CapteursListFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivity(new Intent(getActivity(), SignInActivity.class));
+        }
+
         View view = inflater.inflate(R.layout.fragment_capteurs_list, container, false);
 
         adapter = new CapteursListAdapter(getActivity(), R.layout.fragment_capteurs_list_item, new ArrayList<>());
