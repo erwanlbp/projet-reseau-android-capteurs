@@ -1,12 +1,14 @@
 package fr.eisti.smarthouse.view.fragment;
 
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,12 +24,15 @@ import fr.eisti.smarthouse.view.activity.EditCapteurActivity;
  * Created by ErwanLBP on 20/11/17.
  */
 
-public class CapteursListFragment extends ListFragment {
+public class CapteursListFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private static final String TAG = "CapteursListFragment";
 
     private CapteursListPresenter presenter;
     private CapteursListAdapter adapter;
+
+    private ListView lvCapteurs;
+    private Button btnAdd;
 
     public static CapteursListFragment newInstance() {
         CapteursListFragment fragment = new CapteursListFragment();
@@ -40,15 +45,15 @@ public class CapteursListFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_capteurs_list, container, false);
 
         adapter = new CapteursListAdapter(getActivity(), R.layout.fragment_capteurs_list_item, new ArrayList<>());
-        setListAdapter(adapter);
+
+        lvCapteurs = view.findViewById(R.id.fcl_list_capteurs);
+        lvCapteurs.setAdapter(adapter);
+        lvCapteurs.setOnItemClickListener(this);
+
+        btnAdd = view.findViewById(R.id.fcl_add_capteur);
+        btnAdd.setOnClickListener(this);
 
         return view;
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        presenter.itemClicked(v);
     }
 
     @Override
@@ -64,10 +69,20 @@ public class CapteursListFragment extends ListFragment {
     public void startEditActivity(String capteurName) {
         Intent intent = new Intent(getActivity(), EditCapteurActivity.class);
 
-        if (capteurName != null) {
-            intent.putExtra(Capteur.NAME, capteurName);
-        }
+        intent.putExtra(Capteur.NAME, capteurName);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        presenter.itemClicked(view);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == btnAdd.getId()) {
+            presenter.addNew();
+        }
     }
 }
