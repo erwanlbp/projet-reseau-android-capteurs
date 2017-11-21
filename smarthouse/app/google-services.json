@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "952034138705-f2vhrh5famo37t3l28oves15mkms5294.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.eisti.smarthouse",
+            "certificate_hash": "5cdf90ee1d0aa33fe3dbd865da6d980a0063d18b"
+          }
+        },
+        {
           "client_id": "952034138705-emgglifd597sb0mfmam03nl4k8hcfup8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
