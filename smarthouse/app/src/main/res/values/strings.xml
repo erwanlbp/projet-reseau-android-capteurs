@@ -5,4 +5,5 @@
     <string name="capteur_type">Capteur type</string>
     <string name="capteur_started">Started ?</string>
     <string name="save">Save</string>
+    <string name="sign_in">Sign In</string>
 </resources>
