@@ -2,11 +2,8 @@ package fr.eisti.smarthouse.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.model.Capteur;
@@ -32,7 +29,6 @@ public class EditCapteurActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .add(R.id.aec_fragment_edit, EditCapteurFragment.newInstance(capteurName))
                 .commit();
-
     }
 
     @Override
@@ -40,5 +36,4 @@ public class EditCapteurActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
 }
