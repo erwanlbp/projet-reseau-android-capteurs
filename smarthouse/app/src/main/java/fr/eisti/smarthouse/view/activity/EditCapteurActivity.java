@@ -25,7 +25,7 @@ public class EditCapteurActivity extends AppCompatActivity {
 
         String capteurName = getIntent().getStringExtra(Capteur.NAME);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
