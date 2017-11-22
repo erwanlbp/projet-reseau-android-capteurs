@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import fr.eisti.smarthouse.R;
@@ -24,7 +25,6 @@ public class CapteursListActivity extends AppCompatActivity implements Navigatio
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
-    private Header header;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,31 +45,34 @@ public class CapteursListActivity extends AppCompatActivity implements Navigatio
                 .add(R.id.acl_fragment_list, CapteursListFragment.newInstance())
                 .commit();
 
-        this.header = new Header(this);
+        Header header = new Header(this);
         header.initHeader();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Snackbar.make(drawerLayout, item.getTitle(), Snackbar.LENGTH_SHORT).show();
-        drawerLayout.closeDrawers();
+        Log.i("#####", "onNavigationItemSelected");
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i("#####", "onOptionsItemSelected");
         return actionBarDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        Log.i("#####", "onConfigurationChanged");
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        Log.i("#####", "onPostCreate");
         actionBarDrawerToggle.syncState();
     }
 }
