@@ -23,7 +23,6 @@ import java.util.List;
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.model.Capteur;
 import fr.eisti.smarthouse.presenter.EditCapteurPresenter;
-import fr.eisti.smarthouse.view.activity.CapteursListActivity;
 import fr.eisti.smarthouse.view.activity.SignInActivity;
 
 /**
