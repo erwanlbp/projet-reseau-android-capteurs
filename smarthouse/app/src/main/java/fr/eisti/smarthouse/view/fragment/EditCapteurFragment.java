@@ -62,7 +62,7 @@ public class EditCapteurFragment extends Fragment implements View.OnClickListene
         chkActiv = view.findViewById(R.id.fec_activ_capteur);
         btnEdit = view.findViewById(R.id.fec_edit_capteur);
 
-        edtName.setFilters(new InputFilter[] { setEditTextFilter() });
+        edtName.setFilters(new InputFilter[]{setEditTextFilter()});
 
         btnEdit.setOnClickListener(this);
 

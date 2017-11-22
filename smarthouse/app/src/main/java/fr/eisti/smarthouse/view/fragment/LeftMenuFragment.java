@@ -1,6 +1,7 @@
 package fr.eisti.smarthouse.view.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,19 +23,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import fr.eisti.smarthouse.R;
-import fr.eisti.smarthouse.presenter.LeftMenuPresenter;
+import fr.eisti.smarthouse.view.activity.CapteursListActivity;
 
 public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
-
-    private LeftMenuPresenter presenter;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
-
-    public LeftMenuFragment() {
-        this.presenter = new LeftMenuPresenter(this);
-    }
 
     public static LeftMenuFragment newInstance() {
         return new LeftMenuFragment();
@@ -79,7 +74,16 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Snackbar.make(drawerLayout, item.getTitle(), Snackbar.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.menu_item_listCapteur:
+                startActivity(new Intent(getActivity(), CapteursListActivity.class));
+                getActivity().finish();
+                break;
+            default:
+                Snackbar.make(drawerLayout, item.getTitle() + " not implemented", Snackbar.LENGTH_SHORT).show();
+                return false;
+        }
+
         return true;
     }
 
@@ -100,7 +104,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-            Log.i("#####", "onActivityCreated");
-            actionBarDrawerToggle.syncState();
+        Log.i("#####", "onActivityCreated");
+        actionBarDrawerToggle.syncState();
     }
 }

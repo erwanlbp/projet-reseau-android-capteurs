@@ -20,6 +20,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/fragment_left_menu"/>
+    <include layout="@layout/fragment_left_menu" />
 
 </android.support.v4.widget.DrawerLayout>
