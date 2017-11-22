@@ -70,6 +70,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Go
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getResources().getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build();
 
         // Build a GoogleApiClient with access to the Google Sign-In API and the
@@ -117,15 +118,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Go
     private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        hideProgressDialog();
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(activity, CapteursListActivity.class));
-                        } else {
-                            Toast.makeText(activity.getApplicationContext(), "Google Auth failed", Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(activity, task -> {
+                    hideProgressDialog();
+                    if (task.isSuccessful()) {
+                        startActivity(new Intent(activity, CapteursListActivity.class));
+                    } else {
+                        Toast.makeText(activity.getApplicationContext(), "Google Auth failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

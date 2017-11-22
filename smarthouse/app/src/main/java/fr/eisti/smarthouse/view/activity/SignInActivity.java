@@ -1,7 +1,7 @@
 package fr.eisti.smarthouse.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.view.fragment.SignInFragment;

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import fr.eisti.smarthouse.R;
+import fr.eisti.smarthouse.model.Header;
 import fr.eisti.smarthouse.view.fragment.CapteursListFragment;
 
 /**
@@ -23,6 +24,7 @@ public class CapteursListActivity extends AppCompatActivity implements Navigatio
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
+    private Header header;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +44,9 @@ public class CapteursListActivity extends AppCompatActivity implements Navigatio
         getFragmentManager().beginTransaction()
                 .add(R.id.acl_fragment_list, CapteursListFragment.newInstance())
                 .commit();
+
+        this.header = new Header(this);
+        header.initHeader();
     }
 
     @Override
