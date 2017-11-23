@@ -7,6 +7,11 @@
     <string name="save">Save</string>
     <string name="sign_in">Sign In</string>
 
+    <!-- fragment push qos -->
+    <string name="fpq_browse">Browse</string>
+    <string name="fpq_push_qos">Push it !</string>
+    <string name="fps_hint">QoS file</string>
+
     <!-- Pour le menu gauche -->
     <string name="menu_item_listCapteur">Liste de catpeur</string>
     <string name="menu_item_pushQoS">Push une QoS</string>
@@ -16,8 +21,5 @@
 
     <string name="menu_username">User name</string>
     <string name="menu_useremail">User email</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
