@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.view.activity.CapteursListActivity;
+import fr.eisti.smarthouse.view.activity.PushQoSActivity;
 
 public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,6 +78,10 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
         switch (item.getItemId()) {
             case R.id.menu_item_listCapteur:
                 startActivity(new Intent(getActivity(), CapteursListActivity.class));
+                getActivity().finish();
+                break;
+            case R.id.menu_item_pushQoS :
+                startActivity(new Intent(getActivity(), PushQoSActivity.class));
                 getActivity().finish();
                 break;
             default:
