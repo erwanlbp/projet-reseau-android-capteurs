@@ -1,6 +1,6 @@
-package magic;
+package model;
 
-public class TemperatureCapteur extends Capteur{
+public class LightCapteur extends Capteur {
     @Override
     protected void prepare(String dest) {
 
