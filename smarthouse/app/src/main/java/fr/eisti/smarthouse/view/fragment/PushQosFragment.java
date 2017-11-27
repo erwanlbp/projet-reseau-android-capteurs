@@ -42,7 +42,7 @@ public class PushQosFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_push_qos, container, false);
 
-        drawerLayout = getActivity().findViewById(R.id.apq_drawer_layout);
+        drawerLayout = getActivity().findViewById(R.id.drawer_layout);
 
         tv_name_qos = view.findViewById(R.id.fpq_name_qos);
         btn_browse = view.findViewById(R.id.fpq_browse);
