@@ -1,4 +1,4 @@
-package magic;
+package model;
 
 public abstract class Capteur {
     protected String name;
