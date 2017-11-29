@@ -12,30 +12,39 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendControler {
+public class SendListenControler {
 
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
     private static final int SLEEP_TIME = 1000;
 
     private String ipDest;
-    private int port;
+    private int portEnvoi;
+    private int portEcoute;
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public SendControler(String ipDest, int port) {
+    public SendListenControler(String ipDest, int portEnvoi, int portEcoute) {
         this.ipDest = ipDest;
-        this.port = port;
+        this.portEnvoi = portEnvoi;
+        this.portEcoute = portEcoute;
     }
 
     public void start() {
         objectMapper = new ObjectMapper();
         initCatpeurs();
+        initListenStopControler();
         generateFlux();
     }
 
+    private void initListenStopControler() {
+        ListenStopControler listenStopControler = new ListenStopControler(portEcoute, capteurList);
+        Thread thread = new Thread(listenStopControler::receivedStopFlux);
+        thread.start();
+    }
+
     private void initCatpeurs() {
-        capteurList = new ArrayList<Capteur>();
+        capteurList = new ArrayList<>();
 
         LightCapteur lightCapteur = new LightCapteur("LightCapteur", Type.LIGHT, true);
         TemperatureCapteur temperatureCapteur = new TemperatureCapteur("TemperateurCapteur", Type.TEMPERATURE, true);
@@ -50,10 +59,12 @@ public class SendControler {
         try {
             while (true) {
                 for (Capteur capteur : capteurList) {
-                    if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0)
-                        prepareFlux((LightCapteur) capteur);
-                    if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0)
-                        prepareFlux((TemperatureCapteur) capteur);
+                    if (capteur.isActivated()) {
+                        if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0)
+                            prepareFlux((LightCapteur) capteur);
+                        if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0)
+                            prepareFlux((TemperatureCapteur) capteur);
+                    }
                 }
                 i++;
                 Thread.sleep(SLEEP_TIME);
@@ -95,7 +106,7 @@ public class SendControler {
 
             //On crée notre datagramme
             InetAddress adresse = InetAddress.getByName(ipDest);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, port);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portEnvoi);
 
             //On lui affecte les données à envoyer
             packet.setData(buffer);
