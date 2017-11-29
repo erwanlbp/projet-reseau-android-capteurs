@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical">
 
-    <EditText
+    <TextView
         android:id="@+id/fec_name_capteur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/capteur_name"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:layout_margin="10dp"/>
-
-    <EditText
-        android:id="@+id/fec_type_capteur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/capteur_type"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:layout_margin="10dp"/>
-
-    <CheckBox
-        android:id="@+id/fec_activ_capteur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/capteur_started"
-        android:layout_margin="10dp"/>
-
-    <Button
-        android:id="@+id/fec_edit_capteur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:singleLine="true"
+        android:text="@string/capteur_name"/>
+
+    <TextView
+        android:id="@+id/fec_type_capteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:singleLine="true"
+        android:text="@string/capteur_type"/>
+
+    <Switch
+        android:id="@+id/fec_activ_capteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/capteur_started"/>
 
 </LinearLayout>

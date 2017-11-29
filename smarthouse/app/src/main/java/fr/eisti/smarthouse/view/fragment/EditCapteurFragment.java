@@ -4,21 +4,14 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.model.Capteur;
@@ -29,7 +22,7 @@ import fr.eisti.smarthouse.view.activity.SignInActivity;
  * Created by ErwanLBP on 20/11/17.
  */
 
-public class EditCapteurFragment extends Fragment implements View.OnClickListener {
+public class EditCapteurFragment extends Fragment {
 
     private static final String TAG = "EditCapteurFragment";
 
@@ -37,10 +30,9 @@ public class EditCapteurFragment extends Fragment implements View.OnClickListene
 
     private String capteurName;
 
-    private EditText edtName;
-    private EditText edtType;
-    private CheckBox chkActiv;
-    private Button btnEdit;
+    private TextView tvName;
+    private TextView tvType;
+    private Switch switchActiv;
 
     public static EditCapteurFragment newInstance(String capteurName) {
         EditCapteurFragment fragment = new EditCapteurFragment();
@@ -57,50 +49,23 @@ public class EditCapteurFragment extends Fragment implements View.OnClickListene
 
         View view = inflater.inflate(R.layout.fragment_edit_capteur, container, false);
 
-        edtName = view.findViewById(R.id.fec_name_capteur);
-        edtType = view.findViewById(R.id.fec_type_capteur);
-        chkActiv = view.findViewById(R.id.fec_activ_capteur);
-        btnEdit = view.findViewById(R.id.fec_edit_capteur);
+        tvName = view.findViewById(R.id.fec_name_capteur);
+        tvType = view.findViewById(R.id.fec_type_capteur);
+        switchActiv = view.findViewById(R.id.fec_activ_capteur);
 
-        edtName.setFilters(new InputFilter[]{setEditTextFilter()});
-
-        btnEdit.setOnClickListener(this);
-
-        if (capteurName != null)
+        if (capteurName == null) {
+            Toast.makeText(getActivity(), "Didn't receive a capteur name", Toast.LENGTH_SHORT).show();
+        } else {
             presenter.findInfos(capteurName);
+            switchActiv.setOnCheckedChangeListener((compoundButton, b) -> presenter.activateCapteur(capteurName, b));
+        }
 
         return view;
     }
 
-    public InputFilter setEditTextFilter() {
-        InputFilter filter = new InputFilter() {
-            public CharSequence filter(CharSequence source, int start, int end,
-                                       Spanned dest, int dstart, int dend) {
-                List<String> unauthorizedCharacters = new ArrayList<>(Arrays.asList(".", "$", "[", "]", "#", "/"));
-
-                for (int i = start; i < end; i++) {
-                    if (unauthorizedCharacters.contains(String.valueOf(source.charAt(i)))) {
-                        Toast.makeText(getActivity(), "The name shouldn't contain any of these characters : '.' '$' '[' ']' '#' '/'", Toast.LENGTH_LONG).show();
-                        return "";
-                    }
-                }
-                return null;
-            }
-        };
-
-        return filter;
-    }
-
     public void fillFrom(Capteur capteur) {
-        edtName.setText(capteur.getName());
-        edtType.setText(capteur.getType());
-        chkActiv.setChecked(capteur.isActiv());
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == btnEdit.getId()) {
-            presenter.save(edtName.getText().toString(), edtType.getText().toString(), chkActiv.isChecked());
-        }
+        tvName.setText(capteur.getName());
+        tvType.setText(capteur.getType());
+        switchActiv.setChecked(capteur.isActiv());
     }
 }

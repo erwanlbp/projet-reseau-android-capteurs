@@ -23,4 +23,8 @@ public class EditCapteurPresenter {
     public void findInfos(String capteurName) {
         FirebaseCapteurProvider.findOne(fragment.getActivity().getApplicationContext(), capteurName, (c) -> fragment.fillFrom(c));
     }
+
+    public void activateCapteur(String capteurName, boolean activ) {
+        FirebaseCapteurProvider.switchActiv(fragment.getActivity(), capteurName, activ);
+    }
 }
