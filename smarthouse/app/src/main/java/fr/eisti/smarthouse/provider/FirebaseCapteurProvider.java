@@ -1,10 +1,6 @@
 package fr.eisti.smarthouse.provider;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fr.eisti.smarthouse.model.Capteur;
@@ -81,11 +78,16 @@ public class FirebaseCapteurProvider {
                 .addOnFailureListener(e -> Toast.makeText(context, "saved failure for " + capteur.getName(), Toast.LENGTH_SHORT).show());
     }
 
-    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
-    }
+    public static void switchActiv(Context context, String capteurName, boolean activ) {
+        if (capteurName == null) {
+            return;
+        }
 
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+        FirebaseDatabase.getInstance().getReference()
+                .child(NODE_CAPTEURS)
+                .child(capteurName)
+                .updateChildren(Collections.singletonMap(Capteur.ACTIV, activ))
+                .addOnFailureListener(e -> Toast.makeText(context, "switch failure for " + capteurName, Toast.LENGTH_SHORT).show());
+
     }
 }
