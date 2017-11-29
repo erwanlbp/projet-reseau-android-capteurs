@@ -94,21 +94,18 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i("#####", "onOptionsItemSelected LeftMenuFragment");
         return actionBarDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.i("#####", "onConfigurationChanged LeftMenuFragment");
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.i("#####", "onActivityCreated LeftMenuFragment");
         actionBarDrawerToggle.syncState();
     }
 }
