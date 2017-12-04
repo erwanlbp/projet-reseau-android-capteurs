@@ -61,9 +61,9 @@ public class SendListenControler {
                 for (Capteur capteur : capteurList) {
                     if (capteur.isActivated()) {
                         if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0)
-                            prepareFlux((LightCapteur) capteur);
+                            prepareFlux(capteur);
                         if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0)
-                            prepareFlux((TemperatureCapteur) capteur);
+                            prepareFlux(capteur);
                     }
                 }
                 i++;
@@ -74,23 +74,12 @@ public class SendListenControler {
         }
     }
 
-    private void prepareFlux(LightCapteur capteur) {
-        capteur.generateData();
+    private void prepareFlux(Capteur capteur) {
+        double data = capteur.generateData();
 
         try {
             String s = objectMapper.writeValueAsString(capteur);
-            sendFlux(s, capteur.getName(), capteur.getData());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void prepareFlux(TemperatureCapteur capteur) {
-        capteur.generateData();
-
-        try {
-            String s = objectMapper.writeValueAsString(capteur);
-            sendFlux(s, capteur.getName(), capteur.getData());
+            sendFlux(s, capteur.getName(), data);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

@@ -1,12 +1,15 @@
 package model;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.Random;
 
 public class LightCapteur extends Capteur {
 
     private double data;
 
-    public LightCapteur() {}
+    public LightCapteur() {
+    }
 
     public LightCapteur(String name, Type type, boolean activated) {
         super(name, type, activated);
@@ -17,17 +20,17 @@ public class LightCapteur extends Capteur {
         this.data = data;
     }
 
-    public void generateData() {
+    @Override
+    public double generateData() {
         Random r = new Random();
         this.data = 0 + (1000) * r.nextDouble();
-    }
-
-    public double getData() {
         return data;
     }
 
-    public void setData(double data) {
-        this.data = data;
+    @Exclude
+    @Override
+    public double getData() {
+        return this.data;
     }
 
     @Override
