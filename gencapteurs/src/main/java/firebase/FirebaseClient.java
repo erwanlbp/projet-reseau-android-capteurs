@@ -15,7 +15,6 @@ import java.util.List;
 public class FirebaseClient {
 
     private static final String FIREBASE_URL = "https://smarthouse-31e81.firebaseio.com";
-    private List<String> list = new ArrayList<>();
 
     //Latch to wait firebase response
     private DatabaseReference db;
