@@ -4,3 +4,4 @@ target/
 *.iml
 libs/
 src/main/resources/
+*.json
