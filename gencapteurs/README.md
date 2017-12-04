@@ -10,7 +10,7 @@ Pour générer le jar executable :
 Pour lancer le jar
 - 
 
-java -jar GenFlux.jar \<ip> \<port envoi> \<port ecoute> \<mode>
+java -jar GenFlux.jar \<ipFirebase> \<port envoi> \<port ecoute> \<mode>
 
 **Ip :**
  
