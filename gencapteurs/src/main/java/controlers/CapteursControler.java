@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-public class ListenControler {
+public class CapteursControler {
 
     private static final int SLEEP_TIME = 800;
 
@@ -17,7 +17,7 @@ public class ListenControler {
     private ObjectMapper objectMapper;
     private FirebaseClient firebaseClient;
 
-    public ListenControler(int port) {
+    public CapteursControler(int port) {
         this.port = port;
     }
 

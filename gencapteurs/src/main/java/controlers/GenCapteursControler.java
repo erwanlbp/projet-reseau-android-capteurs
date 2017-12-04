@@ -12,7 +12,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendListenControler {
+public class GenCapteursControler {
 
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
@@ -24,7 +24,7 @@ public class SendListenControler {
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public SendListenControler(String ipDest, int portEnvoi, int portEcoute) {
+    public GenCapteursControler(String ipDest, int portEnvoi, int portEcoute) {
         this.ipDest = ipDest;
         this.portEnvoi = portEnvoi;
         this.portEcoute = portEcoute;

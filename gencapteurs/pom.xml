@@ -25,6 +25,11 @@
             <artifactId>firebase-admin</artifactId>
             <version>5.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.72</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -32,7 +37,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>JesusFlux</finalName>
+                    <finalName>GenFlux</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>

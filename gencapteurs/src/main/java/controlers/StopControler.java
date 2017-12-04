@@ -3,12 +3,12 @@ package controlers;
 import java.io.IOException;
 import java.net.*;
 
-public class SendStopControler {
+public class StopControler {
 
     private String ipDest;
     private int port;
 
-    public SendStopControler(String ipDest, int port) {
+    public StopControler(String ipDest, int port) {
         this.ipDest = ipDest;
         this.port = port;
     }
