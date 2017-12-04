@@ -47,7 +47,7 @@ public class CapteursListAdapter extends ArrayAdapter<Capteur> {
 
         tvName.setText(capteur.getName());
         tvType.setText(capteur.getType());
-        chkActiv.setChecked(capteur.isActiv());
+        chkActiv.setChecked(capteur.isActivated());
 
         return row;
     }
