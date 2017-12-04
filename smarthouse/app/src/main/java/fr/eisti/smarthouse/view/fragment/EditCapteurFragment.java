@@ -66,6 +66,6 @@ public class EditCapteurFragment extends Fragment {
     public void fillFrom(Capteur capteur) {
         tvName.setText(capteur.getName());
         tvType.setText(capteur.getType());
-        switchActiv.setChecked(capteur.isActiv());
+        switchActiv.setChecked(capteur.isActivated());
     }
 }

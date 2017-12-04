@@ -11,13 +11,13 @@ public class Capteur {
     private String name;
     public static final String TYPE = "type";
     private String type;
-    public static final String ACTIV = "activ";
-    private boolean activ;
+    public static final String ACTIV = "activated";
+    private boolean activated;
 
-    public Capteur(String name, String type, boolean activ) {
+    public Capteur(String name, String type, boolean activated) {
         this.name = name;
         this.type = type;
-        this.activ = activ;
+        this.activated = activated;
     }
 
     public Capteur() {
@@ -40,24 +40,24 @@ public class Capteur {
         this.type = type;
     }
 
-    public boolean isActiv() {
-        return activ;
+    public boolean isActivated() {
+        return activated;
     }
 
-    public void setActiv(boolean activ) {
-        this.activ = activ;
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     @Override
     public String toString() {
-        return "[" + name + "] " + type + " " + (activ ? "ON" : "OFF");
+        return "[" + name + "] " + type + " " + (activated ? "ON" : "OFF");
     }
 
     public static Capteur fromDataSnapshot(DataSnapshot dataSnapshot) {
         Capteur capteur = new Capteur();
         capteur.setName((String) dataSnapshot.child(NAME).getValue());
         capteur.setType((String) dataSnapshot.child(TYPE).getValue());
-        capteur.setActiv((boolean) dataSnapshot.child(ACTIV).getValue());
+        capteur.setActivated((boolean) dataSnapshot.child(ACTIV).getValue());
         return capteur;
     }
 }
