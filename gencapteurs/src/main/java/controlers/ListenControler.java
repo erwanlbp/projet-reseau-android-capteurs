@@ -1,6 +1,7 @@
 package controlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import firebase.FirebaseClient;
 import model.LightCapteur;
 import model.TemperatureCapteur;
 
@@ -14,16 +15,15 @@ public class ListenControler {
 
     private int port;
     private ObjectMapper objectMapper;
-    private firebase.FirebaseClient firebaseClient;
+    private FirebaseClient firebaseClient;
 
     public ListenControler(int port) {
         this.port = port;
     }
 
-    public void start() {
+    public void start() throws IOException, InterruptedException {
         objectMapper = new ObjectMapper();
-        firebaseClient = new firebase.FirebaseClient();
-        firebaseClient.initFirebaseClient();
+        firebaseClient = new FirebaseClient();
     }
 
     public void receivedFlux() {
@@ -46,12 +46,12 @@ public class ListenControler {
                 if (s.contains("LIGHT")) {
                     lightCapteur = objectMapper.readValue(s, LightCapteur.class);
                     System.out.println("##### Received flux : " + packet.getAddress() + " - " + lightCapteur);
-                    firebaseClient.sentPutRequet(lightCapteur);
+                    firebaseClient.sentPutRequest(lightCapteur);
                 }
                 if (s.contains("TEMPERATURE")) {
                     temperatureCapteur = objectMapper.readValue(s, TemperatureCapteur.class);
                     System.out.println("##### Received flux : " + packet.getAddress() + " - " + temperatureCapteur);
-                    firebaseClient.sentPutRequet(temperatureCapteur);
+                    firebaseClient.sentPutRequest(temperatureCapteur);
                 }
 
                 Thread.sleep(SLEEP_TIME);

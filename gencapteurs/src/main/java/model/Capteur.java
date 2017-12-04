@@ -1,5 +1,7 @@
 package model;
 
+import com.google.firebase.database.DataSnapshot;
+
 public class Capteur {
 
     private String name;
@@ -45,5 +47,24 @@ public class Capteur {
                 ", type=" + type +
                 ", activated=" + activated +
                 '}';
+    }
+
+    public static Capteur fromDataSnapshot(DataSnapshot dataSnapshot) {
+        Capteur capteur = new Capteur();
+        capteur.setName((String) dataSnapshot.child("name").getValue());
+
+        Type newType = Type.LIGHT;
+        switch (dataSnapshot.child("type").getValue().toString()) {
+            case "LIGHT":
+                newType = Type.LIGHT;
+                break;
+            case "TEMPERATURE":
+                newType = Type.TEMPERATURE;
+                break;
+        }
+
+        capteur.setType(newType);
+        capteur.setActivated((boolean) dataSnapshot.child("activ").getValue());
+        return capteur;
     }
 }

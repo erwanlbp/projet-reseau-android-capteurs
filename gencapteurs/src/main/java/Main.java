@@ -2,9 +2,11 @@ import controlers.ListenControler;
 import controlers.SendListenControler;
 import controlers.SendStopControler;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String ip = args[0];
         int portEnvoi = Integer.parseInt(args[1]);
         int portEcoute = Integer.parseInt(args[2]);
