@@ -30,7 +30,7 @@ public class CapteurNetworkProvider {
 
         try {
             DatagramSocket ds = new DatagramSocket();
-            InetAddress server = InetAddress.getByName("192.168.1.35");
+            InetAddress server = InetAddress.getByName("172.20.10.2");
             int msgLength = msg.length();
             byte[] msgByte = msg.getBytes();
             DatagramPacket dp = new DatagramPacket(msgByte, msgLength, server, serverPort);
