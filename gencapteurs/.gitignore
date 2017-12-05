@@ -1,0 +1,7 @@
+classes/
+target/
+.idea/
+*.iml
+libs/
+src/main/resources/
+*.json
