@@ -1,29 +1,39 @@
 package fr.eisti.smarthouse.model;
 
 public class NetworkConfig {
-    private String ip_dest_gen_capteurs;
-    private String port_dest_gen_capteurs;
+    private String ipDestGenCapteurs;
+    private int portDestGenCapteurs;
+
+    private static NetworkConfig networkConfig;
 
     public NetworkConfig() {}
 
-    public NetworkConfig(String ip_dest_gen_capteurs, String port_dest_gen_capteurs) {
-        this.ip_dest_gen_capteurs = ip_dest_gen_capteurs;
-        this.port_dest_gen_capteurs = port_dest_gen_capteurs;
+    public NetworkConfig(String ipDestGenCapteurs, int portDestGenCapteurs) {
+        this.ipDestGenCapteurs = ipDestGenCapteurs;
+        this.portDestGenCapteurs = portDestGenCapteurs;
     }
 
-    public String getIp_dest_gen_capteurs() {
-        return ip_dest_gen_capteurs;
+    public static void setNetworkConfig(NetworkConfig networkConf) {
+         networkConfig = networkConf;
     }
 
-    public void setIp_dest_gen_capteurs(String ip_dest_gen_capteurs) {
-        this.ip_dest_gen_capteurs = ip_dest_gen_capteurs;
+    public static NetworkConfig getNetworkConfig() {
+        return networkConfig;
     }
 
-    public String getPort_dest_gen_capteurs() {
-        return port_dest_gen_capteurs;
+    public String getIpDestGenCapteurs() {
+        return ipDestGenCapteurs;
     }
 
-    public void setPort_dest_gen_capteurs(String port_dest_gen_capteurs) {
-        this.port_dest_gen_capteurs = port_dest_gen_capteurs;
+    public void setIpDestGenCapteurs(String ipDestGenCapteurs) {
+        this.ipDestGenCapteurs = ipDestGenCapteurs;
+    }
+
+    public int getPortDestGenCapteurs() {
+        return portDestGenCapteurs;
+    }
+
+    public void setPortDestGenCapteurs(int portDestGenCapteurs) {
+        this.portDestGenCapteurs = portDestGenCapteurs;
     }
 }
