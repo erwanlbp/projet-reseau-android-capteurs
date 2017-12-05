@@ -15,7 +15,8 @@ import java.net.InetAddress;
 public class CapteurNetworkProvider {
 
     private static final String TAG = "FirebaseCapteurProvider";
-
+    public static String ipDestGenCapteurs;
+    public static String portDestGenCapteurs;
 
     public static void switchActiv(Activity activity, String capteurName, boolean activ) {
         if (capteurName == null) {
@@ -23,14 +24,13 @@ public class CapteurNetworkProvider {
             return;
         }
 
-        // TODO Recupérer le port d'écoute et l'adresse du serveur pour l'appli #10
-        int serverPort = 7777;
+        int serverPort = Integer.valueOf(portDestGenCapteurs);
         String msg = formSwitchActivMessage(capteurName, activ);
         Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
 
         try {
             DatagramSocket ds = new DatagramSocket();
-            InetAddress server = InetAddress.getByName("192.168.1.35");
+            InetAddress server = InetAddress.getByName(ipDestGenCapteurs);
             int msgLength = msg.length();
             byte[] msgByte = msg.getBytes();
             DatagramPacket dp = new DatagramPacket(msgByte, msgLength, server, serverPort);
