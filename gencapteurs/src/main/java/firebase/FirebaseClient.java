@@ -24,14 +24,14 @@ public class FirebaseClient {
         InputStream serviceAccount = this.getClass().getClassLoader().getResourceAsStream("smarthouse-credentials.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
-                .setDatabaseUrl(FIREBASE_URL)
-                .build();
+            .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+            .setDatabaseUrl(FIREBASE_URL)
+            .build();
 
         FirebaseApp.initializeApp(options);
     }
 
-    public void sentPutRequest(Capteur capteur) {
+    public void sendPutRequest(Capteur capteur) {
         db = FirebaseDatabase.getInstance().getReference();
         db.child("capteurs").child(capteur.getName()).setValueAsync(capteur);
 

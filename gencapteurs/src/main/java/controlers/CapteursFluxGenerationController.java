@@ -7,12 +7,13 @@ import model.LightCapteur;
 import model.TemperatureCapteur;
 import model.Type;
 
-import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenCapteursController {
+public class CapteursFluxGenerationController {
 
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
@@ -24,7 +25,7 @@ public class GenCapteursController {
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public GenCapteursController(String ipDest, int portEnvoi, int portEcoute) {
+    public CapteursFluxGenerationController(String ipDest, int portEnvoi, int portEcoute) {
         this.ipDest = ipDest;
         this.portEnvoi = portEnvoi;
         this.portEcoute = portEcoute;
@@ -33,13 +34,13 @@ public class GenCapteursController {
 
     public void start() {
         initCatpeurs();
-        initStopCapteurControler();
+        initStartStopCapteurControler();
         generateFlux();
     }
 
-    private void initStopCapteurControler() {
-        StartStopController startStopController = new StartStopController(portEcoute, capteurList);
-        Thread thread = new Thread(startStopController::receivedStopFlux);
+    private void initStartStopCapteurControler() {
+        StartStopCapteurController startStopCapteurController = new StartStopCapteurController(portEcoute, capteurList);
+        Thread thread = new Thread(startStopCapteurController::receivedStopFlux);
         thread.start();
     }
 
@@ -47,7 +48,7 @@ public class GenCapteursController {
         capteurList = new ArrayList<>();
 
         LightCapteur lightCapteur = new LightCapteur("LightCapteur", Type.LIGHT, true);
-        TemperatureCapteur temperatureCapteur = new TemperatureCapteur("TemperateurCapteur", Type.TEMPERATURE, true);
+        TemperatureCapteur temperatureCapteur = new TemperatureCapteur("TemperatureCapteur", Type.TEMPERATURE, true);
 
         capteurList.add(lightCapteur);
         capteurList.add(temperatureCapteur);
@@ -101,9 +102,7 @@ public class GenCapteursController {
 
             System.out.println("Send flux : " + capteur.getName() + " - " + packet.getAddress() + " - " + capteur.getData());
 
-        } catch (SocketException | UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -2,6 +2,7 @@ package controlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import firebase.FirebaseClient;
+import model.Capteur;
 import model.LightCapteur;
 import model.TemperatureCapteur;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-public class CapteursController {
+public class CapteursNetworkController {
 
     private static final int SLEEP_TIME = 800;
 
@@ -17,16 +18,13 @@ public class CapteursController {
     private ObjectMapper objectMapper;
     private FirebaseClient firebaseClient;
 
-    public CapteursController(int port) {
+    public CapteursNetworkController(int port) throws IOException, InterruptedException {
         this.port = port;
-    }
-
-    public void start() throws IOException, InterruptedException {
         objectMapper = new ObjectMapper();
         firebaseClient = new FirebaseClient();
     }
 
-    public void receivedFlux() {
+    public void receiveFlux() {
         DatagramSocket client;
 
         try {
@@ -36,27 +34,29 @@ public class CapteursController {
             client = new DatagramSocket(port);
 
             while (true) {
-                LightCapteur lightCapteur;
-                TemperatureCapteur temperatureCapteur;
+                Capteur capteur = null;
+                boolean found = false;
 
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 client.receive(packet);
 
                 String s = new String(packet.getData());
                 if (s.contains("LIGHT")) {
-                    lightCapteur = objectMapper.readValue(s, LightCapteur.class);
-                    System.out.println("##### Received flux : " + packet.getAddress() + " - " + lightCapteur);
-                    firebaseClient.sentPutRequest(lightCapteur);
+                    capteur = objectMapper.readValue(s, LightCapteur.class);
+                    found = true;
                 }
                 if (s.contains("TEMPERATURE")) {
-                    temperatureCapteur = objectMapper.readValue(s, TemperatureCapteur.class);
-                    System.out.println("##### Received flux : " + packet.getAddress() + " - " + temperatureCapteur);
-                    firebaseClient.sentPutRequest(temperatureCapteur);
+                    capteur = objectMapper.readValue(s, TemperatureCapteur.class);
+                    found = true;
+                }
+                if (found) {
+                    System.out.println("Received flux : " + packet.getAddress() + " - " + capteur);
+                    firebaseClient.sendPutRequest(capteur);
                 }
 
                 Thread.sleep(SLEEP_TIME);
             }
-        } catch (InterruptedException | IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

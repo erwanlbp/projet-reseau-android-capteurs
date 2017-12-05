@@ -7,12 +7,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.List;
 
-public class StartStopController {
+public class StartStopCapteurController {
 
     private int port;
     private List<Capteur> capteurList;
 
-    public StartStopController(int port, List<Capteur> capteurList) {
+    public StartStopCapteurController(int port, List<Capteur> capteurList) {
         this.port = port;
         this.capteurList = capteurList;
     }
