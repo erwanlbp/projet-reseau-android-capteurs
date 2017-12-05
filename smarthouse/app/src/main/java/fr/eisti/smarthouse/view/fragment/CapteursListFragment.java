@@ -48,7 +48,7 @@ public class CapteursListFragment extends ListFragment {
 
         View view = inflater.inflate(R.layout.fragment_capteurs_list, container, false);
 
-        FirebaseConfigProvider.setNetworkConfig();
+        FirebaseConfigProvider.setNetworkConfig(getActivity().getApplicationContext());
 
         adapter = new CapteursListAdapter(getActivity(), R.layout.fragment_capteurs_list_item, new ArrayList<>());
 

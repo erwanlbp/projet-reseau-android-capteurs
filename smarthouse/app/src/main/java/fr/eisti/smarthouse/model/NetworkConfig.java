@@ -4,7 +4,7 @@ public class NetworkConfig {
     private String ipDestGenCapteurs;
     private int portDestGenCapteurs;
 
-    private static NetworkConfig networkConfig;
+    private static NetworkConfig networkConfig = null;
 
     public NetworkConfig() {}
 
