@@ -1,12 +1,13 @@
 package fr.eisti.smarthouse.provider;
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+
+import fr.eisti.smarthouse.model.NetworkConfig;
 
 /**
  * Created by ErwanLBP on 30/11/17.
@@ -14,9 +15,7 @@ import java.net.InetAddress;
 
 public class CapteurNetworkProvider {
 
-    private static final String TAG = "FirebaseCapteurProvider";
-    public static String ipDestGenCapteurs;
-    public static String portDestGenCapteurs;
+    private static final String TAG = "CapteurNetworkProvider";
 
     public static void switchActiv(Activity activity, String capteurName, boolean activ) {
         if (capteurName == null) {
@@ -24,13 +23,13 @@ public class CapteurNetworkProvider {
             return;
         }
 
-        int serverPort = Integer.valueOf(portDestGenCapteurs);
+        int serverPort = NetworkConfig.getNetworkConfig().getPortDestGenCapteurs();
         String msg = formSwitchActivMessage(capteurName, activ);
         Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
 
         try {
             DatagramSocket ds = new DatagramSocket();
-            InetAddress server = InetAddress.getByName(ipDestGenCapteurs);
+            InetAddress server = InetAddress.getByName(NetworkConfig.getNetworkConfig().getIpDestGenCapteurs());
             int msgLength = msg.length();
             byte[] msgByte = msg.getBytes();
             DatagramPacket dp = new DatagramPacket(msgByte, msgLength, server, serverPort);
