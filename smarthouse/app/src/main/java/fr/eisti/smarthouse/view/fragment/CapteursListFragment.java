@@ -89,11 +89,13 @@ public class CapteursListFragment extends ListFragment {
     }
 
     public void startEditActivity(String capteurName) {
-        Intent intent = new Intent(getActivity(), EditCapteurActivity.class);
+        if (CapteurNetworkProvider.ipDestGenCapteurs != null && CapteurNetworkProvider.portDestGenCapteurs != null) {
+            Intent intent = new Intent(getActivity(), EditCapteurActivity.class);
 
-        intent.putExtra(Capteur.NAME, capteurName);
+            intent.putExtra(Capteur.NAME, capteurName);
 
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
     @Override
