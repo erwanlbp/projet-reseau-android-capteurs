@@ -29,10 +29,10 @@ public class FirebaseClient {
                 .build();
 
         FirebaseApp.initializeApp(options);
-        db = FirebaseDatabase.getInstance().getReference();
     }
 
     public void sentPutRequest(Capteur capteur) {
+        db = FirebaseDatabase.getInstance().getReference();
         db.child("capteurs").child(capteur.getName()).setValueAsync(capteur);
 
         DatabaseReference dr = db.child("data").child(capteur.getName()).push();
