@@ -13,7 +13,6 @@ import java.io.InputStream;
 public class FirebaseClient {
 
     private static final String FIREBASE_URL = "https://smarthouse-31e81.firebaseio.com";
-
     private DatabaseReference db;
 
     public FirebaseClient() throws IOException, InterruptedException {
@@ -24,18 +23,27 @@ public class FirebaseClient {
         InputStream serviceAccount = this.getClass().getClassLoader().getResourceAsStream("smarthouse-credentials.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
-            .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
-            .setDatabaseUrl(FIREBASE_URL)
-            .build();
+                .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+                .setDatabaseUrl(FIREBASE_URL)
+                .build();
 
         FirebaseApp.initializeApp(options);
+
+        db = FirebaseDatabase.getInstance().getReference();
     }
 
     public void sendPutRequest(Capteur capteur) {
-        db = FirebaseDatabase.getInstance().getReference();
         db.child("capteurs").child(capteur.getName()).setValueAsync(capteur);
 
         DatabaseReference dr = db.child("data").child(capteur.getName()).push();
         dr.setValueAsync(capteur.getData());
+    }
+
+    public void sendPortIn(String portIn) {
+        db.child("config").child("portDestGenCapteurs").setValueAsync(portIn);
+    }
+
+    public void sendIpDest(String ipDest) {
+        db.child("config").child("ipDestGenCapteurs").setValueAsync(ipDest);
     }
 }

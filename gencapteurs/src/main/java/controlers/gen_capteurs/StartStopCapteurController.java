@@ -1,4 +1,4 @@
-package controlers;
+package controlers.gen_capteurs;
 
 import model.Capteur;
 
@@ -17,7 +17,7 @@ public class StartStopCapteurController {
         this.capteurList = capteurList;
     }
 
-    public void receivedStopFlux() {
+    public void receptionStartStopFlux() {
         DatagramSocket client;
 
         try {

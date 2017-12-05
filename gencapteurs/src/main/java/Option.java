@@ -7,7 +7,7 @@ public class Option {
     @Parameter(names = {"-h", "--help"}, help = true, description = "Affiche l'aide")
     private boolean help;
 
-    @Parameter(names = "-ip-firebase", description = "ip du routeur de destination vers firebase")
+    @Parameter(names = "-ip-firebase", required = true, description = "ip du routeur de destination vers firebase")
     private String ipFirebase;
 
     @Parameter(names = "-port-out", description = "port de sortie du serveur")
@@ -16,7 +16,7 @@ public class Option {
     @Parameter(names = "-port-in", required = true, description = "port d'écoute du serveur")
     private int portIn;
 
-    @Parameter(names = "-start-mode", required = true, validateWith = StartModeValidation.class, description = "Mode de lancement [gen-capteur, db-interface]")
+    @Parameter(names = "-start-mode", required = true, /*validateWith = StartModeValidation.class,*/ description = "Mode de lancement [gen-capteur, db-interface]")
     private String startMode;
 
     public String getIpFirebase() {

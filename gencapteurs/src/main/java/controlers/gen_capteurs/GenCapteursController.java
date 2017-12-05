@@ -1,4 +1,4 @@
-package controlers;
+package controlers.gen_capteurs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +13,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CapteursFluxGenerationController {
+public class GenCapteursController {
 
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
@@ -25,14 +25,15 @@ public class CapteursFluxGenerationController {
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public CapteursFluxGenerationController(String ipDest, int portEnvoi, int portEcoute) {
-        this.ipDest = ipDest;
+    public GenCapteursController(String ipDest, int portEnvoi, int portEcoute) {
         this.portEnvoi = portEnvoi;
         this.portEcoute = portEcoute;
         this.objectMapper = new ObjectMapper();
+        this.ipDest = ipDest;
     }
 
     public void start() {
+        new SendConfig().sendConfig(portEnvoi, portEcoute, ipDest);
         initCatpeurs();
         initStartStopCapteurControler();
         generateFlux();
@@ -40,7 +41,7 @@ public class CapteursFluxGenerationController {
 
     private void initStartStopCapteurControler() {
         StartStopCapteurController startStopCapteurController = new StartStopCapteurController(portEcoute, capteurList);
-        Thread thread = new Thread(startStopCapteurController::receivedStopFlux);
+        Thread thread = new Thread(startStopCapteurController::receptionStartStopFlux);
         thread.start();
     }
 
