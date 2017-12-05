@@ -9,15 +9,11 @@ public class TemperatureCapteur extends Capteur {
     private double data;
 
     public TemperatureCapteur() {
+        super();
     }
 
     public TemperatureCapteur(String name, Type type, boolean activated) {
         super(name, type, activated);
-    }
-
-    public TemperatureCapteur(String name, Type type, boolean activated, double data) {
-        super(name, type, activated);
-        this.data = data;
     }
 
     @Override
@@ -31,15 +27,5 @@ public class TemperatureCapteur extends Capteur {
     @Override
     public double getData() {
         return this.data;
-    }
-
-    @Override
-    public String toString() {
-        return "TemperatureCapteur{" +
-                "name='" + getName() + '\'' +
-                ", type=" + getType() +
-                ", activated=" + isActivated() +
-                ", data=" + data +
-                '}';
     }
 }

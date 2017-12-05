@@ -38,4 +38,9 @@ public abstract class Capteur implements HandleData {
     public void setActivated(boolean activated) {
         this.activated = activated;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + " [" + name + "] " + type + " " + (activated ? "ON" : "OFF");
+    }
 }

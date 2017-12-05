@@ -1,14 +1,14 @@
 import com.beust.jcommander.JCommander;
-import controlers.CapteursControler;
-import controlers.GenCapteursControler;
+import controlers.CapteursController;
+import controlers.GenCapteursController;
 
 public class Main {
 
     public static void main(String[] args) {
         Option option = new Option();
         JCommander commander = JCommander.newBuilder()
-            .addObject(option)
-            .build();
+                .addObject(option)
+                .build();
         commander.parse(args);
 
         if (option.getHelp()) {
@@ -17,18 +17,18 @@ public class Main {
         }
 
         if (option.getMode().equals("gen-capteur")) {
-            GenCapteursControler genCapteursControler = new GenCapteursControler(option.getIpFirebase(), option.getPortOut(), option.getPortIn());
-            genCapteursControler.start();
+            GenCapteursController genCapteursController = new GenCapteursController(option.getIpFirebase(), option.getPortOut(), option.getPortIn());
+            genCapteursController.start();
         }
         if (option.getMode().equals("db-interface")) {
-            CapteursControler capteursControler = new CapteursControler(option.getPortIn());
+            CapteursController capteursController = new CapteursController(option.getPortIn());
             try {
-                capteursControler.start();
+                capteursController.start();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
             }
-            capteursControler.receivedFlux();
+            capteursController.receivedFlux();
         }
     }
 }

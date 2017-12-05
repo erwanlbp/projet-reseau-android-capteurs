@@ -27,6 +27,4 @@ Pour sur lequel les flux et les commandes de start / stop sont réceptionnées
 **Modes :**
 - gen-capteur : Générer les flux et écouter les commandes de start et stop
 - capteurs : Ecoute les flux et persiste dans firebase
-- stop : Envoyer commande de stop du LightCapteur
-
 

@@ -9,18 +9,14 @@ import model.Capteur;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FirebaseClient {
 
     private static final String FIREBASE_URL = "https://smarthouse-31e81.firebaseio.com";
 
-    //Latch to wait firebase response
     private DatabaseReference db;
 
     public FirebaseClient() throws IOException, InterruptedException {
-
         initFirebaseClient();
     }
 

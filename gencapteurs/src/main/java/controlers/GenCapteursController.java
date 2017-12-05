@@ -12,7 +12,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenCapteursControler {
+public class GenCapteursController {
 
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
@@ -24,22 +24,22 @@ public class GenCapteursControler {
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public GenCapteursControler(String ipDest, int portEnvoi, int portEcoute) {
+    public GenCapteursController(String ipDest, int portEnvoi, int portEcoute) {
         this.ipDest = ipDest;
         this.portEnvoi = portEnvoi;
         this.portEcoute = portEcoute;
+        this.objectMapper = new ObjectMapper();
     }
 
     public void start() {
-        objectMapper = new ObjectMapper();
         initCatpeurs();
-        initListenStopControler();
+        initStopCapteurControler();
         generateFlux();
     }
 
-    private void initListenStopControler() {
-        ListenStopControler listenStopControler = new ListenStopControler(portEcoute, capteurList);
-        Thread thread = new Thread(listenStopControler::receivedStopFlux);
+    private void initStopCapteurControler() {
+        StartStopController startStopController = new StartStopController(portEcoute, capteurList);
+        Thread thread = new Thread(startStopController::receivedStopFlux);
         thread.start();
     }
 
@@ -53,6 +53,7 @@ public class GenCapteursControler {
         capteurList.add(temperatureCapteur);
     }
 
+    //TODO Génération des flux PAR capteur dans un Thread #15
     private void generateFlux() {
         int i = 0;
 
@@ -61,9 +62,9 @@ public class GenCapteursControler {
                 for (Capteur capteur : capteurList) {
                     if (capteur.isActivated()) {
                         if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0)
-                            prepareFlux(capteur);
+                            sendFlux(capteur);
                         if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0)
-                            prepareFlux(capteur);
+                            sendFlux(capteur);
                     }
                 }
                 i++;
@@ -74,18 +75,13 @@ public class GenCapteursControler {
         }
     }
 
-    private void prepareFlux(Capteur capteur) {
-        double data = capteur.generateData();
-
+    private void sendFlux(Capteur capteur) {
+        String capteurJson = "";
         try {
-            String s = objectMapper.writeValueAsString(capteur);
-            sendFlux(s, capteur.getName(), data);
+            capteurJson = objectMapper.writeValueAsString(capteur);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-    }
-
-    private void sendFlux(String capteurJson, String name, double data) {
         DatagramSocket client;
 
         byte[] buffer = capteurJson.getBytes();
@@ -103,7 +99,7 @@ public class GenCapteursControler {
             //On envoie au serveur
             client.send(packet);
 
-            System.out.println("##### Send flux : " + name + " - " + packet.getAddress() + " - " + data);
+            System.out.println("Send flux : " + capteur.getName() + " - " + packet.getAddress() + " - " + capteur.getData());
 
         } catch (SocketException | UnknownHostException e) {
             e.printStackTrace();
