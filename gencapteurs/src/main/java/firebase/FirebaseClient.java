@@ -28,11 +28,10 @@ public class FirebaseClient {
                 .build();
 
         FirebaseApp.initializeApp(options);
-
-        db = FirebaseDatabase.getInstance().getReference();
     }
 
     public void sendPutRequest(Capteur capteur) {
+        db = FirebaseDatabase.getInstance().getReference();
         db.child("capteurs").child(capteur.getName()).setValueAsync(capteur);
 
         DatabaseReference dr = db.child("data").child(capteur.getName()).push();
@@ -40,10 +39,12 @@ public class FirebaseClient {
     }
 
     public void sendPortIn(int portIn) {
+        db = FirebaseDatabase.getInstance().getReference();
         db.child("config").child("portDestGenCapteurs").setValueAsync(portIn);
     }
 
     public void sendIpDest(String ipDest) {
+        db = FirebaseDatabase.getInstance().getReference();
         db.child("config").child("ipDestGenCapteurs").setValueAsync(ipDest);
     }
 }

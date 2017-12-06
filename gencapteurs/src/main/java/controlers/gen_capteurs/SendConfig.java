@@ -1,42 +1,63 @@
 package controlers.gen_capteurs;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.net.*;
+import java.util.Enumeration;
 
 public class SendConfig {
 
-    public SendConfig() {
+    private static final String EHT0 = "wlp";
+
+    public void send(int portEnvoi, int portEcoute, String ipDest) {
+
+        String ipGenCapteur = getIpAdress();
+
+        if (ipGenCapteur != null) {
+            DatagramSocket client;
+
+            String data = portEcoute + ":" + ipGenCapteur + ":";
+            byte[] buffer = data.getBytes();
+
+            try {
+                client = new DatagramSocket();
+
+                InetAddress adresse = InetAddress.getByName(ipDest);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portEnvoi);
+
+                packet.setData(buffer);
+                client.send(packet);
+
+                System.out.println("Send config : " + ipGenCapteur + " - " + portEnvoi);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void sendConfig(int portEnvoi, int portEcoute, String ipDest) {
-        String ipGenCapteur = InetAddress.getLoopbackAddress().getHostAddress();
-        sendIt(String.valueOf(portEnvoi), String.valueOf(portEcoute), ipDest, ipGenCapteur);
-    }
-
-    private void sendIt(String portEnvoi, String portEcoute, String ipDest, String ipGenCapteur) {
-        DatagramSocket client;
-
-        String data = portEcoute + ":" + ipGenCapteur + ":";
-        byte[] buffer = data.getBytes();
+    private String getIpAdress() {
+        boolean isETH0 = false;
 
         try {
-            client = new DatagramSocket();
+            Enumeration<NetworkInterface> list = NetworkInterface.getNetworkInterfaces();
 
-            //On crée notre datagramme
-            InetAddress adresse = InetAddress.getByName(ipDest);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, Integer.parseInt(portEnvoi));
+            while (list.hasMoreElements()) {
 
-            //On lui affecte les données à envoyer
-            packet.setData(buffer);
+                NetworkInterface ni = list.nextElement();
+                Enumeration<InetAddress> listAddress = ni.getInetAddresses();
 
-            //On envoie au serveur
-            client.send(packet);
+                while (listAddress.hasMoreElements()) {
+                    InetAddress address = listAddress.nextElement();
+                    if (isETH0)
+                        return address.getHostAddress();
+                    if (address.getHostAddress().contains(EHT0))
+                        isETH0 = true;
+                }
 
-            System.out.println("Send config : " + ipGenCapteur + " - " + portEnvoi);
-
-        } catch (Exception e) {
+            }
+        } catch (SocketException e) {
             e.printStackTrace();
         }
+        System.out.println("No ip adress found");
+        return null;
     }
 }

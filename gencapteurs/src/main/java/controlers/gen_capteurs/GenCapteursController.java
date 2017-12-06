@@ -33,7 +33,7 @@ public class GenCapteursController {
     }
 
     public void start() {
-        new SendConfig().sendConfig(portEnvoi, portEcoute, ipDest);
+        new SendConfig().send(portEnvoi, portEcoute, ipDest);
         initCatpeurs();
         initStartStopCapteurControler();
         generateFlux();
@@ -63,6 +63,7 @@ public class GenCapteursController {
             while (true) {
                 for (Capteur capteur : capteurList) {
                     if (capteur.isActivated()) {
+                        capteur.generateData();
                         if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0)
                             sendFlux(capteur);
                         if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0)
