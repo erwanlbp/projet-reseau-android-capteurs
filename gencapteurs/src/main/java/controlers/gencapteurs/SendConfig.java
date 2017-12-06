@@ -1,4 +1,4 @@
-package controlers.gen_capteurs;
+package controlers.gencapteurs;
 
 import java.net.*;
 import java.util.Enumeration;

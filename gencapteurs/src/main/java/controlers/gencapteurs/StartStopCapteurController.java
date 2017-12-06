@@ -1,4 +1,4 @@
-package controlers.gen_capteurs;
+package controlers.gencapteurs;
 
 import model.Capteur;
 

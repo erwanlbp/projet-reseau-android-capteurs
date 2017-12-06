@@ -1,6 +1,6 @@
 import com.beust.jcommander.JCommander;
-import controlers.gen_capteurs.GenCapteursController;
-import controlers.db_interface.DBInterfaceController;
+import controlers.gencapteurs.GenCapteursController;
+import controlers.dbinterface.DBInterfaceController;
 
 public class Main {
 

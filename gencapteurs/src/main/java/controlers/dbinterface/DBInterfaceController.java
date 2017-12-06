@@ -1,4 +1,4 @@
-package controlers.db_interface;
+package controlers.dbinterface;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import firebase.FirebaseClient;

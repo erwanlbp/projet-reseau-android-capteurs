@@ -1,4 +1,4 @@
-package controlers.gen_capteurs;
+package controlers.gencapteurs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
