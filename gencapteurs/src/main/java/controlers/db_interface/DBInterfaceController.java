@@ -11,9 +11,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 public class DBInterfaceController {
-
-    private static final int SLEEP_TIME = 800;
-
+    
     private int port;
     private ObjectMapper objectMapper;
     private FirebaseClient firebaseClient;
@@ -37,8 +35,6 @@ public class DBInterfaceController {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 client.receive(packet);
                 analysePacket(packet);
-
-                Thread.sleep(SLEEP_TIME);
             }
         } catch (Exception e) {
             e.printStackTrace();

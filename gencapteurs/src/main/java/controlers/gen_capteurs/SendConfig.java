@@ -9,9 +9,9 @@ public class SendConfig {
     public SendConfig() {
     }
 
-    public void sendConfig(int portOut, int portIn, String ipDest) {
+    public void sendConfig(int portEnvoi, int portEcoute, String ipDest) {
         String ipGenCapteur = InetAddress.getLoopbackAddress().getHostAddress();
-        sendIt(String.valueOf(portOut), String.valueOf(portIn), ipDest, ipGenCapteur);
+        sendIt(String.valueOf(portEnvoi), String.valueOf(portEcoute), ipDest, ipGenCapteur);
     }
 
     private void sendIt(String portEnvoi, String portEcoute, String ipDest, String ipGenCapteur) {
