@@ -17,7 +17,7 @@ public class SendConfig {
     private void sendIt(String portEnvoi, String portEcoute, String ipDest, String ipGenCapteur) {
         DatagramSocket client;
 
-        String data = portEcoute + ":" + ipGenCapteur;
+        String data = portEcoute + ":" + ipGenCapteur + ":";
         byte[] buffer = data.getBytes();
 
         try {

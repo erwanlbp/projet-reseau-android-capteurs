@@ -39,7 +39,7 @@ public class FirebaseClient {
         dr.setValueAsync(capteur.getData());
     }
 
-    public void sendPortIn(String portIn) {
+    public void sendPortIn(int portIn) {
         db.child("config").child("portDestGenCapteurs").setValueAsync(portIn);
     }
 

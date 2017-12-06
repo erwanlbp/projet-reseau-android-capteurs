@@ -59,9 +59,9 @@ public class DBInterfaceController {
             System.out.println("Received flux : " + packet.getAddress() + " - " + capteur);
             firebaseClient.sendPutRequest(capteur);
         } else {
-            int separator = s.indexOf(":");
-            firebaseClient.sendPortIn(s.substring(0, separator));
-            firebaseClient.sendIpDest(s.substring(separator + 1, s.length()));
+            String[] bufferSplitted = s.split(":");
+            firebaseClient.sendPortIn(Integer.valueOf(bufferSplitted[0]));
+            firebaseClient.sendIpDest(bufferSplitted[1]);
         }
     }
 }
