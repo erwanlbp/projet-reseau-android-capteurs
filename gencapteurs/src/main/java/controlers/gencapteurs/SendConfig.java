@@ -34,6 +34,7 @@ public class SendConfig {
         }
     }
 
+    //TODO to improve
     private String getIpAdress() {
         boolean isETH0 = false;
 
@@ -52,7 +53,6 @@ public class SendConfig {
                     if (address.getHostAddress().contains(EHT0))
                         isETH0 = true;
                 }
-
             }
         } catch (SocketException e) {
             e.printStackTrace();

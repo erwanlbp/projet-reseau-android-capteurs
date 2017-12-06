@@ -14,16 +14,18 @@ Usage: java -jar GenFlux.jar  [options]
   Options:
     -h, --help
       Affiche l'aide
-    -ip-firebase
+    -ip, --ip-firebase
       ip du routeur de destination vers firebase
-  * -port-in
+      Default: <empty string>
+    -pi, --port-in
       port d'écoute du serveur, sur lequel les flux et les commandes de start / stop sont réceptionnées
-      Default: 0
-    -port-out
+      Default: -1
+    -po, --port-out
       port de sortie du serveur, sur lequel les flux sont envoyés
-      Default: 0
-  * -start-mode
+      Default: -1
+    -m, --start-mode
       Mode de lancement [gen-capteur, db-interface]
          - gen-capteur : Générer les flux et écouter les commandes de start et stop
          - capteurs : Ecoute les flux et persiste dans firebase
+      Default: <empty string>
 ```
