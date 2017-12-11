@@ -48,8 +48,8 @@ public class GenCapteursController {
     private void initCatpeurs() {
         capteurList = new ArrayList<>();
 
-        LightCapteur lightCapteur = new LightCapteur("LightCapteur", Type.LIGHT, true);
-        TemperatureCapteur temperatureCapteur = new TemperatureCapteur("TemperatureCapteur", Type.TEMPERATURE, true);
+        LightCapteur lightCapteur = new LightCapteur("LightCapteur", Type.LIGHT, true, 1000);
+        TemperatureCapteur temperatureCapteur = new TemperatureCapteur("TemperatureCapteur", Type.TEMPERATURE, true, 20);
 
         capteurList.add(lightCapteur);
         capteurList.add(temperatureCapteur);
