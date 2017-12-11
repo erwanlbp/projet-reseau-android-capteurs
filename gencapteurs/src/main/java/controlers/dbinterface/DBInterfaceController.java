@@ -52,12 +52,12 @@ public class DBInterfaceController {
         DatagramSocket client;
 
         try {
-            byte[] buffer = new byte[8196];
 
             //On met le serveur en écoute
             client = new DatagramSocket(port);
 
             while (true) {
+                byte[] buffer = new byte[8196];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 client.receive(packet);
                 analyseAndSendPacket(packet);
