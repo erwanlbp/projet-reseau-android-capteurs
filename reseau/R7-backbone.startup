@@ -7,5 +7,7 @@ ifconfig eth1 192.168.6.20/24
 # I6
 ifconfig eth2 192.168.11.20/24
 
-# Redirection vers internet par défaut
-route add default gw 192.168.6.20
+# Pour en faire un routeur
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+/etc/init.d/zebra start
