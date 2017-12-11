@@ -16,9 +16,7 @@ import java.util.List;
 
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.model.Capteur;
-import fr.eisti.smarthouse.model.NetworkConfig;
 import fr.eisti.smarthouse.presenter.CapteursListPresenter;
-import fr.eisti.smarthouse.provider.FirebaseConfigProvider;
 import fr.eisti.smarthouse.view.CapteursListAdapter;
 import fr.eisti.smarthouse.view.activity.EditCapteurActivity;
 import fr.eisti.smarthouse.view.activity.SignInActivity;
@@ -48,8 +46,6 @@ public class CapteursListFragment extends ListFragment {
 
         View view = inflater.inflate(R.layout.fragment_capteurs_list, container, false);
 
-        FirebaseConfigProvider.setNetworkConfig(getActivity().getApplicationContext());
-
         adapter = new CapteursListAdapter(getActivity(), R.layout.fragment_capteurs_list_item, new ArrayList<>());
 
         this.setListAdapter(adapter);
@@ -68,13 +64,11 @@ public class CapteursListFragment extends ListFragment {
     }
 
     public void startEditActivity(String capteurName) {
-        if (NetworkConfig.getNetworkConfig() != null) {
             Intent intent = new Intent(getActivity(), EditCapteurActivity.class);
 
             intent.putExtra(Capteur.NAME, capteurName);
 
             startActivity(intent);
-        }
     }
 
     @Override

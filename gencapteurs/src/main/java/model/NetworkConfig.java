@@ -1,23 +1,19 @@
-package fr.eisti.smarthouse.model;
+package model;
 
 public class NetworkConfig {
     private String ipDestGenCapteurs;
     private int portDestGenCapteurs;
 
-    private static NetworkConfig networkConfig = null;
+    private static NetworkConfig networkConfig;
 
-    public NetworkConfig() {}
-
-    public NetworkConfig(String ipDestGenCapteurs, int portDestGenCapteurs) {
-        this.ipDestGenCapteurs = ipDestGenCapteurs;
-        this.portDestGenCapteurs = portDestGenCapteurs;
+    private NetworkConfig() {
+        this.ipDestGenCapteurs = "init";
+        this.portDestGenCapteurs = -1;
     }
 
-    public static void setNetworkConfig(NetworkConfig networkConf) {
-         networkConfig = networkConf;
-    }
-
-    public static NetworkConfig getNetworkConfig() {
+    public static NetworkConfig getInstance() {
+        if (networkConfig == null)
+            networkConfig = new NetworkConfig();
         return networkConfig;
     }
 
@@ -35,5 +31,9 @@ public class NetworkConfig {
 
     public void setPortDestGenCapteurs(int portDestGenCapteurs) {
         this.portDestGenCapteurs = portDestGenCapteurs;
+    }
+
+    public boolean isSet() {
+        return !ipDestGenCapteurs.equals("init") && portDestGenCapteurs != -1;
     }
 }
