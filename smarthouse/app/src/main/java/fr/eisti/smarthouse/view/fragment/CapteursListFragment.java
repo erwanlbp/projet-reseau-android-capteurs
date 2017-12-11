@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,6 @@ import fr.eisti.smarthouse.presenter.CapteursListPresenter;
 import fr.eisti.smarthouse.provider.FirebaseConfigProvider;
 import fr.eisti.smarthouse.view.CapteursListAdapter;
 import fr.eisti.smarthouse.view.activity.EditCapteurActivity;
-import fr.eisti.smarthouse.view.activity.SignInActivity;
 
 /**
  * Created by ErwanLBP on 20/11/17.
@@ -42,10 +39,6 @@ public class CapteursListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            startActivity(new Intent(getActivity(), SignInActivity.class));
-        }
-
         View view = inflater.inflate(R.layout.fragment_capteurs_list, container, false);
 
         FirebaseConfigProvider.setNetworkConfig(getActivity().getApplicationContext());
