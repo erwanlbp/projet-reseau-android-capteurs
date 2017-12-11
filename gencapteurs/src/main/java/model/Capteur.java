@@ -2,6 +2,8 @@ package model;
 
 import com.google.firebase.database.DataSnapshot;
 
+import java.util.Random;
+
 public abstract class Capteur implements HandleData {
 
     private String name;
@@ -51,6 +53,13 @@ public abstract class Capteur implements HandleData {
                 System.out.println("Classe de capteur inconnue");
                 return null;
         }
+    }
+
+    protected double getFromRange(double data, double percent) {
+        Random r = new Random();
+        double min = data - (data * percent);
+        double max = data + (data * percent);
+        return min + (max - min) * r.nextDouble();
     }
 
     @Override
