@@ -9,15 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.SignInActivity">
+        <activity android:name=".view.activity.EditCapteurActivity" />
+        <activity android:name=".view.activity.CapteursListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.activity.EditCapteurActivity" />
-        <activity android:name=".view.activity.CapteursListActivity" />
+            </intent-filter></activity>
         <activity android:name=".view.activity.PushQoSActivity"></activity>
     </application>
 
