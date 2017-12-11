@@ -35,7 +35,7 @@ public class Main {
                 System.exit(1);
             }
             try {
-                new DBInterfaceController(option.getPortIn()).receiveFlux();
+                new DBInterfaceController(option.getPortIn()).init();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);

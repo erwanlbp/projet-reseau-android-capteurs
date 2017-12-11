@@ -3,8 +3,8 @@ package firebase;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseCredentials;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
+import controlers.dbinterface.StartStopCallback;
 import model.Capteur;
 
 import java.io.IOException;
@@ -14,12 +14,9 @@ public class FirebaseClient {
 
     private static final String FIREBASE_URL = "https://smarthouse-31e81.firebaseio.com";
     private DatabaseReference db;
+    private static FirebaseClient instance;
 
-    public FirebaseClient() throws IOException, InterruptedException {
-        initFirebaseClient();
-    }
-
-    private void initFirebaseClient() throws IOException {
+    private FirebaseClient() throws IOException, InterruptedException {
         InputStream serviceAccount = this.getClass().getClassLoader().getResourceAsStream("smarthouse-credentials.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
@@ -30,21 +27,46 @@ public class FirebaseClient {
         FirebaseApp.initializeApp(options);
     }
 
-    public void sendPutRequest(Capteur capteur) {
+    public static FirebaseClient getInstance() throws IOException, InterruptedException {
+        if (instance == null)
+            instance = new FirebaseClient();
+        return instance;
+    }
+
+    public void sendCapteur(Capteur capteur) {
         db = FirebaseDatabase.getInstance().getReference();
         db.child("capteurs").child(capteur.getName()).setValueAsync(capteur);
+    }
 
+    public void sendData(Capteur capteur) {
         DatabaseReference dr = db.child("data").child(capteur.getName()).push();
         dr.setValueAsync(capteur.getData());
     }
 
-    public void sendPortIn(int portIn) {
-        db = FirebaseDatabase.getInstance().getReference();
-        db.child("config").child("portDestGenCapteurs").setValueAsync(portIn);
-    }
+    public void listenStartStop(StartStopCallback startStopCallback) {
+        db = FirebaseDatabase.getInstance().getReference().child("capteurs");
+        db.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            }
 
-    public void sendIpDest(String ipDest) {
-        db = FirebaseDatabase.getInstance().getReference();
-        db.child("config").child("ipDestGenCapteurs").setValueAsync(ipDest);
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Capteur capteur = Capteur.fromSnapshot(dataSnapshot);
+                startStopCallback.switchCapteur(capteur);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }

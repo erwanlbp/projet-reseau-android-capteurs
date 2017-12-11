@@ -1,7 +1,6 @@
 package fr.eisti.smarthouse.presenter;
 
 import fr.eisti.smarthouse.model.Capteur;
-import fr.eisti.smarthouse.provider.CapteurNetworkProvider;
 import fr.eisti.smarthouse.provider.FirebaseCapteurProvider;
 import fr.eisti.smarthouse.view.fragment.EditCapteurFragment;
 
@@ -27,6 +26,5 @@ public class EditCapteurPresenter {
 
     public void activateCapteur(String capteurName, boolean activ) {
         FirebaseCapteurProvider.switchActiv(fragment.getActivity(), capteurName, activ);
-        CapteurNetworkProvider.switchActiv(fragment.getActivity(), capteurName, activ);
     }
 }

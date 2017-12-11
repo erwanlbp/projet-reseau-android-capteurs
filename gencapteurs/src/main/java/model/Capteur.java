@@ -1,5 +1,7 @@
 package model;
 
+import com.google.firebase.database.DataSnapshot;
+
 public abstract class Capteur implements HandleData {
 
     private String name;
@@ -37,6 +39,18 @@ public abstract class Capteur implements HandleData {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+
+    public static Capteur fromSnapshot(DataSnapshot dataSnapshot) {
+        switch (dataSnapshot.getKey()) {
+            case "LightCapteur":
+                return dataSnapshot.getValue(LightCapteur.class);
+            case "TemperatureCapteur":
+                return dataSnapshot.getValue(TemperatureCapteur.class);
+            default:
+                System.out.println("Classe de capteur inconnue");
+                return null;
+        }
     }
 
     @Override
