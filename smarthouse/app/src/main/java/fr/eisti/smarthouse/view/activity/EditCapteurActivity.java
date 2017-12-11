@@ -23,6 +23,7 @@ public class EditCapteurActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_capteur);
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+        	Toast.makeText(this, "Can't access this if not logged in", Toast.LENGTH_SHORT).show();
             finish();
         }
 
