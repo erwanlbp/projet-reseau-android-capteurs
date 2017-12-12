@@ -46,8 +46,6 @@ public class CapteursListFragment extends Fragment implements AdapterView.OnItem
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_capteurs_list, container, false);
 
-        adapter = new CapteursListAdapter(getActivity(), R.layout.fragment_capteurs_list_item, new ArrayList<>());
-
         ListView capteursList = view.findViewById(R.id.capteursList);
         adapter = new CapteursListAdapter(getActivity(), R.layout.fragment_capteurs_list_item, new ArrayList<>());
 
