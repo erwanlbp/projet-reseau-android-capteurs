@@ -1,3 +1,4 @@
+#!/bin/bash
 # Vers Capteurs
 ifconfig eth110 192.168.1.10/24
 

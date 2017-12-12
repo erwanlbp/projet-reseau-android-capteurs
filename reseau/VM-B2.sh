@@ -1,3 +1,4 @@
+#!/bin/bash
 # Vers backbone vers capteurs
 ifconfig eth320 192.168.3.20/24
  

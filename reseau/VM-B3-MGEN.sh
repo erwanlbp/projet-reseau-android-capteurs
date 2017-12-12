@@ -1,6 +1,7 @@
 # Vers backbone intérieur vers capteur
 ifconfig eth420 192.168.4.20/24
 
+#!/bin/bash
 # Vers bdd
 ifconfig eth510 192.168.5.10/24
 
