@@ -1,13 +1,10 @@
 # E3
-ifconfig eth0 192.168.5.10/24
+ifconfig eth10 192.168.5.10/24
 
 # I3
 ifconfig eth1 192.168.6.10/24
 
 # Pour en faire un routeur
 echo 1 > /proc/sys/net/ipv4/ip_forward
-
-# Pour avoir les DNS (pour apt-get)
-echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 
 /etc/init.d/zebra start

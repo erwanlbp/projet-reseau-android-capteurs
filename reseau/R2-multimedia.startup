@@ -1,5 +1,5 @@
 # E2
-ifconfig eth0 192.168.3.10/24
+ifconfig eth10 192.168.3.10/24
 
 # I2
 ifconfig eth1 192.168.4.10/24
