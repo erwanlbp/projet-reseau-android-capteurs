@@ -7,6 +7,9 @@
     <string name="save">Save</string>
     <string name="sign_in">Sign In</string>
 
+    <!-- fragment liste capteurs -->
+    <string name="activate_capteur_button">Activer/Désactiver capteur</string>
+
     <!-- fragment push qos -->
     <string name="fpq_browse">Browse</string>
     <string name="fpq_push_qos">Push it !</string>
