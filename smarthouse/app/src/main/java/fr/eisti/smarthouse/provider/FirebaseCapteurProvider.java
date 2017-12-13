@@ -1,9 +1,9 @@
 package fr.eisti.smarthouse.provider;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -12,7 +12,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import fr.eisti.smarthouse.model.Capteur;
 import fr.eisti.smarthouse.provider.callback.FirebaseFindAllCallback;
@@ -85,14 +84,25 @@ public class FirebaseCapteurProvider {
         FirebaseDatabase.getInstance().getReference()
                 .child(NODE_DATAS)
                 .child(capteurName)
-                .addValueEventListener(new ValueEventListener() {
+                .addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<Double> datas = new ArrayList<>();
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            datas.add(0, ds.getValue(Double.class));
-                        }
-                        ffac.populate(datas);
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        ffac.addToList(dataSnapshot.getValue(Double.class));
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Toast.makeText(context, "Child changed not implemented", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        Toast.makeText(context, "Child removed not implemented", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        Toast.makeText(context, "Child moved not implemented", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -104,7 +114,6 @@ public class FirebaseCapteurProvider {
 
     @FunctionalInterface
     public interface FirebaseFindAllDataCallback {
-        void populate(List<Double> datas);
+        void addToList(Double datas);
     }
-
 }
