@@ -78,6 +78,24 @@ mgen imput generation.mgn
 • OFF x signifie qu’on met fin au processus x existant, par exemple OFF 1 pour arrêter la transmission démarrée par la commande ON 1.
 
 ## Réception de flux multimédia
+
+### Pour une écoute classique : 
 ```
 mgen imput reception.mgn
 ```
+
+### Pour une écoute avec génération de graphique (avec trpr et gnuplot) :
+```
+mgen input reception.mgn | trpr mgen real | gnuplot
+```
+
+#### Exemple script
+```
+0.0 LISTEN UDP 5000
+```
+• La première valeur représente l’instant de démarrage, relatif au moment t=0 de démarrage de la commande mgen
+• 5000 représente le port d'écoute
+
+
+
+
