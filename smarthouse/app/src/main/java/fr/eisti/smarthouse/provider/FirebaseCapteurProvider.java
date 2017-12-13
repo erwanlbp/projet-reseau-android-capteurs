@@ -1,6 +1,7 @@
 package fr.eisti.smarthouse.provider;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import fr.eisti.smarthouse.model.Capteur;
 import fr.eisti.smarthouse.provider.callback.FirebaseFindAllCallback;
@@ -24,6 +26,7 @@ public class FirebaseCapteurProvider {
     private static final String TAG = "FirebaseCapteurProvider";
 
     private static final String NODE_CAPTEURS = "capteurs";
+    private static final String NODE_DATAS = "data";
 
     public static void findAll(final Context context, final FirebaseFindAllCallback ffac) {
         FirebaseDatabase.getInstance().getReference()
@@ -65,19 +68,6 @@ public class FirebaseCapteurProvider {
                 });
     }
 
-    public static void save(final Context context, final Capteur capteur) {
-        if (capteur == null) {
-            return;
-        }
-
-        FirebaseDatabase.getInstance().getReference()
-                .child(NODE_CAPTEURS)
-                .child(capteur.getName())
-                .setValue(capteur)
-                .addOnCompleteListener(task -> Toast.makeText(context, "saved " + capteur.getName() + ": " + task.isSuccessful(), Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(context, "saved failure for " + capteur.getName(), Toast.LENGTH_SHORT).show());
-    }
-
     public static void switchActiv(Context context, String capteurName, boolean activ) {
         if (capteurName == null) {
             return;
@@ -90,4 +80,31 @@ public class FirebaseCapteurProvider {
                 .addOnFailureListener(e -> Toast.makeText(context, "switch failure for " + capteurName, Toast.LENGTH_SHORT).show());
 
     }
+
+    public static void findAllDatas(final Context context, final String capteurName, final FirebaseFindAllDataCallback ffac) {
+        FirebaseDatabase.getInstance().getReference()
+                .child(NODE_DATAS)
+                .child(capteurName)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Double> datas = new ArrayList<>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            datas.add(0, ds.getValue(Double.class));
+                        }
+                        ffac.populate(datas);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @FunctionalInterface
+    public interface FirebaseFindAllDataCallback {
+        void populate(List<Double> datas);
+    }
+
 }

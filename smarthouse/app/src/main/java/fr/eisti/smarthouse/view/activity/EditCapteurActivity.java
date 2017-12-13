@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.model.Capteur;
+import fr.eisti.smarthouse.view.fragment.DataCapteurFragment;
 import fr.eisti.smarthouse.view.fragment.EditCapteurFragment;
 
 /**
@@ -36,6 +37,7 @@ public class EditCapteurActivity extends AppCompatActivity {
 
         getFragmentManager().beginTransaction()
                 .add(R.id.aec_fragment_edit, EditCapteurFragment.newInstance(capteurName))
+                .add(R.id.aec_fragment_data, DataCapteurFragment.newInstance(capteurName))
                 .commit();
     }
 
