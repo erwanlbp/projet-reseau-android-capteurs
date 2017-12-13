@@ -44,15 +44,16 @@ public abstract class Capteur implements HandleData {
     }
 
     public static Capteur fromSnapshot(DataSnapshot dataSnapshot) {
-        switch (dataSnapshot.getKey()) {
-            case "LightCapteur":
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            if (ds.getValue().equals(Type.LIGHT.toString())) {
                 return dataSnapshot.getValue(LightCapteur.class);
-            case "TemperatureCapteur":
+            }
+            if (ds.getValue().equals(Type.TEMPERATURE.toString())) {
                 return dataSnapshot.getValue(TemperatureCapteur.class);
-            default:
-                System.out.println("Classe de capteur inconnue");
-                return null;
+            }
         }
+        System.out.println("Classe de capteur inconnue");
+        return null;
     }
 
     protected double getFromRange(double data, double percent) {

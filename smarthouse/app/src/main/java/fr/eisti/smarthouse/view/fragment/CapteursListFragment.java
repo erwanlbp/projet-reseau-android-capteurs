@@ -30,7 +30,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class CapteursListFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private static final String TAG = "CapteursListFragment";
     private static final int ACTIONS_REQUEST_CODE = 10;
 
     private CapteursListPresenter presenter;
@@ -40,6 +39,12 @@ public class CapteursListFragment extends Fragment implements AdapterView.OnItem
         CapteursListFragment fragment = new CapteursListFragment();
         fragment.presenter = new CapteursListPresenter(fragment);
         return fragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.fillCapteursList();
     }
 
     @Override
@@ -56,12 +61,6 @@ public class CapteursListFragment extends Fragment implements AdapterView.OnItem
         switchButton.setOnClickListener(v -> launchVocalSearch());
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.fillCapteursList();
     }
 
     public void fillCapteursList(List<Capteur> capteurs) {
