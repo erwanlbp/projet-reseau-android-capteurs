@@ -17,7 +17,7 @@ public class GenCapteursController {
 
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
-    private static final int SLEEP_TIME = 1000;
+    private static final int SLEEP_TIME = 500;
 
     private String ipDest;
     private int portEnvoi;
@@ -48,11 +48,31 @@ public class GenCapteursController {
     private void initCatpeurs() {
         capteurList = new ArrayList<>();
 
-        LightCapteur lightCapteur = new LightCapteur("LightCapteur", Type.LIGHT, true, 1000);
-        TemperatureCapteur temperatureCapteur = new TemperatureCapteur("TemperatureCapteur", Type.TEMPERATURE, true, 20);
+        LightCapteur luxCave1 = new LightCapteur("Cave 1", Type.LIGHT, true, 500);
+        LightCapteur luxCave2 = new LightCapteur("Cave 2", Type.LIGHT, true, 400);
+        LightCapteur luxSalon1 = new LightCapteur("Salon 1", Type.LIGHT, true, 1300);
+        LightCapteur luxSalon2 = new LightCapteur("salon 2", Type.LIGHT, true, 1300);
+        LightCapteur luxVeranda1 = new LightCapteur("Veranda 1", Type.LIGHT, true, 1800);
+        LightCapteur luxVeranda2 = new LightCapteur("Veranda 2", Type.LIGHT, true, 2000);
+        TemperatureCapteur tempCave1 = new TemperatureCapteur("Cave 1", Type.TEMPERATURE, true, 5);
+        TemperatureCapteur tempCave2 = new TemperatureCapteur("Cave 2", Type.TEMPERATURE, true, 4);
+        TemperatureCapteur tempTerasse1 = new TemperatureCapteur("Terasse 1", Type.TEMPERATURE, true, -5);
+        TemperatureCapteur tempTerasse2 = new TemperatureCapteur("Terasse 2", Type.TEMPERATURE, true, -6);
+        TemperatureCapteur tempCheminee = new TemperatureCapteur("Cheminée", Type.TEMPERATURE, true, 28);
+        TemperatureCapteur tempSalon = new TemperatureCapteur("Salon", Type.TEMPERATURE, true, 20);
 
-        capteurList.add(lightCapteur);
-        capteurList.add(temperatureCapteur);
+        capteurList.add(luxCave1);
+        capteurList.add(luxCave2);
+        capteurList.add(luxSalon1);
+        capteurList.add(luxSalon2);
+        capteurList.add(luxVeranda1);
+        capteurList.add(luxVeranda2);
+        capteurList.add(tempCave1);
+        capteurList.add(tempCave2);
+        capteurList.add(tempCheminee);
+        capteurList.add(tempSalon);
+        capteurList.add(tempTerasse1);
+        capteurList.add(tempTerasse2);
     }
 
     //TODO Génération des flux PAR capteur dans un Thread #15
