@@ -16,6 +16,6 @@ public class DataCapteurPresenter {
     }
 
     public void fillDataList(String capteurName) {
-        FirebaseCapteurProvider.findAllDatas(fragment.getActivity().getApplicationContext(), capteurName, (l) -> fragment.fillDataList(l));
+        FirebaseCapteurProvider.findAllDatas(fragment.getActivity().getApplicationContext(), capteurName, (d) -> fragment.addToDataList(d));
     }
 }

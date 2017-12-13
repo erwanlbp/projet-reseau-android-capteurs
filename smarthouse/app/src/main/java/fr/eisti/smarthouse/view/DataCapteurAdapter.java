@@ -45,9 +45,8 @@ public class DataCapteurAdapter extends ArrayAdapter<Double> {
         return row;
     }
 
-    public void swapItems(List<Double> items) {
-        this.datas.clear();
-        this.datas.addAll(items);
+    public void addItem(Double item) {
+        this.datas.add(0, item);
         notifyDataSetChanged();
     }
 }
