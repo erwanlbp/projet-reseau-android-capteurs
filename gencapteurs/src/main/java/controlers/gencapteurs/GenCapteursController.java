@@ -22,18 +22,20 @@ public class GenCapteursController {
     private String ipDest;
     private int portDest;
     private int portListen;
+    private String networkInterfaceName;
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public GenCapteursController(String ipDest, int portDest, int portListen) {
+    public GenCapteursController(String ipDest, int portDest, int portListen, String networkInterfaceName) {
         this.portDest = portDest;
         this.portListen = portListen;
         this.objectMapper = new ObjectMapper();
         this.ipDest = ipDest;
+        this.networkInterfaceName = networkInterfaceName;
     }
 
     public void start() {
-        new SendConfig().send(portDest, portListen, ipDest);
+        new SendConfig().send(portDest, portListen, ipDest, networkInterfaceName);
         initCatpeurs();
         initStartStopCapteurControler();
         generateFlux();

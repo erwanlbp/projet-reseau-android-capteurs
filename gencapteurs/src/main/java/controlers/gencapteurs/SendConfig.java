@@ -5,28 +5,26 @@ import java.util.Enumeration;
 
 public class SendConfig {
 
-    private static final String EHT0 = "wlp";
+    public void send(int portDest, int portListen, String ipDest, String netInterfaceName) {
 
-    public void send(int portEnvoi, int portEcoute, String ipDest) {
-
-        String ipGenCapteur = getIpAdress();
+        String ipGenCapteur = getIpAdress(netInterfaceName);
 
         if (ipGenCapteur != null) {
             DatagramSocket client;
 
-            String data = portEcoute + ":" + ipGenCapteur + ":";
+            String data = portListen + ":" + ipGenCapteur + ":";
             byte[] buffer = data.getBytes();
 
             try {
                 client = new DatagramSocket();
 
                 InetAddress adresse = InetAddress.getByName(ipDest);
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portEnvoi);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portDest);
 
                 packet.setData(buffer);
                 client.send(packet);
 
-                System.out.println("Send config : " + ipGenCapteur + " - " + portEnvoi);
+                System.out.println("Send config : " + ipGenCapteur + " - " + portDest);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -35,7 +33,7 @@ public class SendConfig {
     }
 
     //TODO to improve
-    private String getIpAdress() {
+    private String getIpAdress(String netInterfaceName) {
         boolean isETH0 = false;
 
         try {
@@ -50,7 +48,7 @@ public class SendConfig {
                     InetAddress address = listAddress.nextElement();
                     if (isETH0)
                         return address.getHostAddress();
-                    if (address.getHostAddress().contains(EHT0))
+                    if (address.getHostAddress().contains(netInterfaceName))
                         isETH0 = true;
                 }
             }
