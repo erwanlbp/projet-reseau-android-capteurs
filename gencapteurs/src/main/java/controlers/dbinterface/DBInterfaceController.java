@@ -16,12 +16,12 @@ import java.util.List;
 
 public class DBInterfaceController {
 
-    private int port;
+    private int portListen;
     private ObjectMapper objectMapper;
     private List<String> listCapteur;
 
-    public DBInterfaceController(int port) throws IOException, InterruptedException {
-        this.port = port;
+    public DBInterfaceController(int portListen) throws IOException, InterruptedException {
+        this.portListen = portListen;
         objectMapper = new ObjectMapper();
         listCapteur = new ArrayList<>();
     }
@@ -54,7 +54,7 @@ public class DBInterfaceController {
         try {
 
             //On met le serveur en écoute
-            client = new DatagramSocket(port);
+            client = new DatagramSocket(portListen);
 
             while (true) {
                 byte[] buffer = new byte[8196];

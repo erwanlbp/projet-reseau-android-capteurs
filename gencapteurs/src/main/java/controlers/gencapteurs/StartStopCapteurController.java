@@ -9,11 +9,11 @@ import java.util.List;
 
 public class StartStopCapteurController {
 
-    private int port;
+    private int portListen;
     private List<Capteur> capteurList;
 
-    public StartStopCapteurController(int port, List<Capteur> capteurList) {
-        this.port = port;
+    public StartStopCapteurController(int portListen, List<Capteur> capteurList) {
+        this.portListen = portListen;
         this.capteurList = capteurList;
     }
 
@@ -24,7 +24,7 @@ public class StartStopCapteurController {
             byte[] buffer = new byte[8196];
 
             //On met le serveur en écoute
-            client = new DatagramSocket(port);
+            client = new DatagramSocket(portListen);
 
             while (true) {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
