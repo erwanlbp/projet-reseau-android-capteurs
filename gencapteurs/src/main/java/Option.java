@@ -17,6 +17,9 @@ public class Option {
     @Parameter(names = {"-m", "--start-mode"}, description = "Mode de lancement [gen-capteur, db-interface]")
     private String startMode = "";
 
+    @Parameter(names = {"-nin", "--network-interface-name"}, description = "Identifiant de l'interface reseau")
+    private String networkInterfaceName;
+
     public String getIpFirebase() {
         return ipFirebase;
     }
@@ -55,5 +58,13 @@ public class Option {
 
     public void setHelp(boolean help) {
         this.help = help;
+    }
+
+    public String getNetworkInterfaceName() {
+        return networkInterfaceName;
+    }
+
+    public void setNetworkInterfaceName(String networkInterfaceName) {
+        this.networkInterfaceName = networkInterfaceName;
     }
 }

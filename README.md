@@ -46,6 +46,8 @@ java -jar GenFlux.jar  [options]
     -ip, --ip-firebase
       ip du routeur de destination vers firebase
       Default: <empty string>
+    -nin, --network-interface-name
+      Identifiant de l'interface reseau
     -pi, --port-in
       port d'écoute du serveur, sur lequel les flux et les commandes de start / stop sont réceptionnées
       Default: -1

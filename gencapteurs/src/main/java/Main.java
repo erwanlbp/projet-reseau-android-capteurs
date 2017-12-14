@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
         Option option = new Option();
         JCommander commander = JCommander.newBuilder()
-                .addObject(option)
-                .build();
+            .addObject(option)
+            .build();
         commander.parse(args);
 
         if (option.getHelp()) {
@@ -22,11 +22,11 @@ public class Main {
         }
 
         if (option.getStartMode().equals("gen-capteur")) {
-            if (Strings.isNullOrEmpty(option.getIpFirebase()) || option.getPortDest() <= 0 || option.getPortListen() <= 0) {
+            if (Strings.isNullOrEmpty(option.getIpFirebase()) || option.getPortDest() <= 0 || option.getPortListen() <= 0 || Strings.isNullOrEmpty(option.getNetworkInterfaceName())) {
                 System.out.println("gen-capteur needs Firbase ip, port destination and port listen");
                 System.exit(1);
             }
-            new GenCapteursController(option.getIpFirebase(), option.getPortDest(), option.getPortListen()).start();
+            new GenCapteursController(option.getIpFirebase(), option.getPortDest(), option.getPortListen(), option.getNetworkInterfaceName()).start();
         }
 
         if (option.getStartMode().equals("db-interface")) {
