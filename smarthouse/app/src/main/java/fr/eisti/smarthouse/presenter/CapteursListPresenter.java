@@ -41,15 +41,15 @@ public class CapteursListPresenter {
         Toast errorToast = Toast.makeText(fragment.getActivity().getApplicationContext(),
                 "Votre phrase doit contenir : active/activer/désactive/désactiver et numéro index", Toast.LENGTH_LONG);
 
-        if(isValid(sentence)) {
+        if (isValid(sentence)) {
             Map<String, String> map = getWords(sentence);
 
             String index = map.get("index");
             String value = map.get("activated");
 
-            System.out.println("#####"+value);
+            System.out.println("#####" + value);
 
-            if(index != null) {
+            if (index != null) {
                 Boolean activated;
                 switch (value) {
                     case "activer":
@@ -63,11 +63,17 @@ public class CapteursListPresenter {
                     default:
                         activated = false;
                 }
+                try {
+                    Capteur capteur = adapter.getItem(Integer.valueOf(index) - 1);
+                    activateCapteur(capteur.getName(), activated);
+                } catch (Exception e) {
+                    Toast.makeText(fragment.getActivity(), (Integer.valueOf(index) - 1) + " ne renvoi pas vers un capteur", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
 
-                Capteur capteur = adapter.getItem(Integer.valueOf(index) - 1);
-                activateCapteur(capteur.getName(), activated);
-            } else errorToast.show();
-        } else errorToast.show();
+        errorToast.show();
     }
 
     private boolean isValid(String sentence) {
@@ -83,7 +89,7 @@ public class CapteursListPresenter {
         String[] sentenceSplitted = sentence.split(" ");
         Map<String, String> map = new HashMap<>();
 
-        for(int i=0; i<sentenceSplitted.length; i++) {
+        for (int i = 0; i < sentenceSplitted.length; i++) {
             switch (sentenceSplitted[i]) {
                 case "activer":
                 case "active":
@@ -94,7 +100,7 @@ public class CapteursListPresenter {
                     map.put("activated", sentenceSplitted[i]);
                     break;
                 case "numéro":
-                    if(i < sentenceSplitted.length-1) map.put("index", sentenceSplitted[i+1]);
+                    if (i < sentenceSplitted.length - 1) map.put("index", sentenceSplitted[i + 1]);
                     break;
                 default:
             }
