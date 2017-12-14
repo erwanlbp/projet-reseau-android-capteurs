@@ -3,6 +3,7 @@ package fr.eisti.smarthouse.provider;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,6 +25,7 @@ public class FirebaseCapteurProvider {
     private static final String TAG = "FirebaseCapteurProvider";
 
     private static final String NODE_CAPTEURS = "capteurs";
+    private static final String NODE_DATAS = "data";
 
     public static void findAll(final Context context, final FirebaseFindAllCallback ffac) {
         FirebaseDatabase.getInstance().getReference()
@@ -65,19 +67,6 @@ public class FirebaseCapteurProvider {
                 });
     }
 
-    public static void save(final Context context, final Capteur capteur) {
-        if (capteur == null) {
-            return;
-        }
-
-        FirebaseDatabase.getInstance().getReference()
-                .child(NODE_CAPTEURS)
-                .child(capteur.getName())
-                .setValue(capteur)
-                .addOnCompleteListener(task -> Toast.makeText(context, "saved " + capteur.getName() + ": " + task.isSuccessful(), Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(context, "saved failure for " + capteur.getName(), Toast.LENGTH_SHORT).show());
-    }
-
     public static void switchActiv(Context context, String capteurName, boolean activ) {
         if (capteurName == null) {
             return;
@@ -89,5 +78,42 @@ public class FirebaseCapteurProvider {
                 .updateChildren(Collections.singletonMap(Capteur.ACTIV, activ))
                 .addOnFailureListener(e -> Toast.makeText(context, "switch failure for " + capteurName, Toast.LENGTH_SHORT).show());
 
+    }
+
+    public static void findAllDatas(final Context context, final String capteurName, final FirebaseFindAllDataCallback ffac) {
+        FirebaseDatabase.getInstance().getReference()
+                .child(NODE_DATAS)
+                .child(capteurName)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        ffac.addToList(dataSnapshot.getValue(Double.class));
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Toast.makeText(context, "Child changed not implemented", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        Toast.makeText(context, "Child removed not implemented", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        Toast.makeText(context, "Child moved not implemented", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @FunctionalInterface
+    public interface FirebaseFindAllDataCallback {
+        void addToList(Double datas);
     }
 }

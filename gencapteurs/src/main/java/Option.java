@@ -8,14 +8,17 @@ public class Option {
     @Parameter(names = {"-ip", "--ip-firebase"}, description = "ip du routeur de destination vers firebase")
     private String ipFirebase = "";
 
-    @Parameter(names = {"-po", "--port-out"}, description = "port de sortie du serveur")
-    private int portOut = -1;
+    @Parameter(names = {"-pd", "--port-destination"}, description = "port de destination des packets UDP")
+    private int portDest = -1;
 
-    @Parameter(names = {"-pi", "--port-in"}, description = "port d'écoute du serveur")
-    private int portIn = -1;
+    @Parameter(names = {"-pl", "--port-listen"}, description = "port d'écoute du serveur")
+    private int portListen = -1;
 
     @Parameter(names = {"-m", "--start-mode"}, description = "Mode de lancement [gen-capteur, db-interface]")
     private String startMode = "";
+
+    @Parameter(names = {"-nin", "--network-interface-name"}, description = "Identifiant de l'interface reseau")
+    private String networkInterfaceName;
 
     public String getIpFirebase() {
         return ipFirebase;
@@ -25,20 +28,20 @@ public class Option {
         this.ipFirebase = ipFirebase;
     }
 
-    public int getPortOut() {
-        return portOut;
+    public int getPortDest() {
+        return portDest;
     }
 
-    public void setPortOut(int portOut) {
-        this.portOut = portOut;
+    public void setPortDest(int portDest) {
+        this.portDest = portDest;
     }
 
-    public int getPortIn() {
-        return portIn;
+    public int getPortListen() {
+        return portListen;
     }
 
-    public void setPortIn(int portIn) {
-        this.portIn = portIn;
+    public void setPortListen(int portListen) {
+        this.portListen = portListen;
     }
 
     public String getStartMode() {
@@ -55,5 +58,13 @@ public class Option {
 
     public void setHelp(boolean help) {
         this.help = help;
+    }
+
+    public String getNetworkInterfaceName() {
+        return networkInterfaceName;
+    }
+
+    public void setNetworkInterfaceName(String networkInterfaceName) {
+        this.networkInterfaceName = networkInterfaceName;
     }
 }

@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
         Option option = new Option();
         JCommander commander = JCommander.newBuilder()
-                .addObject(option)
-                .build();
+            .addObject(option)
+            .build();
         commander.parse(args);
 
         if (option.getHelp()) {
@@ -22,20 +22,20 @@ public class Main {
         }
 
         if (option.getStartMode().equals("gen-capteur")) {
-            if (Strings.isNullOrEmpty(option.getIpFirebase()) || option.getPortOut() <= 0 || option.getPortIn() <= 0) {
-                System.out.println("gen-capteur needs Firbase ip, port out and port in");
+            if (Strings.isNullOrEmpty(option.getIpFirebase()) || option.getPortDest() <= 0 || option.getPortListen() <= 0 || Strings.isNullOrEmpty(option.getNetworkInterfaceName())) {
+                System.out.println("gen-capteur needs Firbase ip, port destination and port listen");
                 System.exit(1);
             }
-            new GenCapteursController(option.getIpFirebase(), option.getPortOut(), option.getPortIn()).start();
+            new GenCapteursController(option.getIpFirebase(), option.getPortDest(), option.getPortListen(), option.getNetworkInterfaceName()).start();
         }
 
         if (option.getStartMode().equals("db-interface")) {
-            if (option.getPortIn() <= 0) {
-                System.out.println("db-interface needs port in");
+            if (option.getPortListen() <= 0) {
+                System.out.println("db-interface needs port listen");
                 System.exit(1);
             }
             try {
-                new DBInterfaceController(option.getPortIn()).init();
+                new DBInterfaceController(option.getPortListen()).init();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);

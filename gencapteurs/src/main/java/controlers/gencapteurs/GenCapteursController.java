@@ -17,30 +17,32 @@ public class GenCapteursController {
 
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
-    private static final int SLEEP_TIME = 1000;
+    private static final int SLEEP_TIME = 500;
 
     private String ipDest;
-    private int portEnvoi;
-    private int portEcoute;
+    private int portDest;
+    private int portListen;
+    private String networkInterfaceName;
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public GenCapteursController(String ipDest, int portEnvoi, int portEcoute) {
-        this.portEnvoi = portEnvoi;
-        this.portEcoute = portEcoute;
+    public GenCapteursController(String ipDest, int portDest, int portListen, String networkInterfaceName) {
+        this.portDest = portDest;
+        this.portListen = portListen;
         this.objectMapper = new ObjectMapper();
         this.ipDest = ipDest;
+        this.networkInterfaceName = networkInterfaceName;
     }
 
     public void start() {
-        new SendConfig().send(portEnvoi, portEcoute, ipDest);
+        new SendConfig().send(portDest, portListen, ipDest, networkInterfaceName);
         initCatpeurs();
         initStartStopCapteurControler();
         generateFlux();
     }
 
     private void initStartStopCapteurControler() {
-        StartStopCapteurController startStopCapteurController = new StartStopCapteurController(portEcoute, capteurList);
+        StartStopCapteurController startStopCapteurController = new StartStopCapteurController(portListen, capteurList);
         Thread thread = new Thread(startStopCapteurController::receptionStartStopFlux);
         thread.start();
     }
@@ -48,11 +50,31 @@ public class GenCapteursController {
     private void initCatpeurs() {
         capteurList = new ArrayList<>();
 
-        LightCapteur lightCapteur = new LightCapteur("LightCapteur", Type.LIGHT, true, 1000);
-        TemperatureCapteur temperatureCapteur = new TemperatureCapteur("TemperatureCapteur", Type.TEMPERATURE, true, 20);
+        LightCapteur luxCave1 = new LightCapteur("Cave 1", Type.LIGHT, true, 500);
+        LightCapteur luxCave2 = new LightCapteur("Cave 2", Type.LIGHT, true, 400);
+        LightCapteur luxSalon1 = new LightCapteur("Salon 1", Type.LIGHT, true, 1300);
+        LightCapteur luxSalon2 = new LightCapteur("salon 2", Type.LIGHT, true, 1300);
+        LightCapteur luxVeranda1 = new LightCapteur("Veranda 1", Type.LIGHT, true, 1800);
+        LightCapteur luxVeranda2 = new LightCapteur("Veranda 2", Type.LIGHT, true, 2000);
+        TemperatureCapteur tempCave1 = new TemperatureCapteur("Cave 1", Type.TEMPERATURE, true, 5);
+        TemperatureCapteur tempCave2 = new TemperatureCapteur("Cave 2", Type.TEMPERATURE, true, 4);
+        TemperatureCapteur tempTerasse1 = new TemperatureCapteur("Terasse 1", Type.TEMPERATURE, true, -5);
+        TemperatureCapteur tempTerasse2 = new TemperatureCapteur("Terasse 2", Type.TEMPERATURE, true, -6);
+        TemperatureCapteur tempCheminee = new TemperatureCapteur("Cheminee", Type.TEMPERATURE, true, 28);
+        TemperatureCapteur tempSalon = new TemperatureCapteur("Salon", Type.TEMPERATURE, true, 20);
 
-        capteurList.add(lightCapteur);
-        capteurList.add(temperatureCapteur);
+        capteurList.add(luxCave1);
+        capteurList.add(luxCave2);
+        capteurList.add(luxSalon1);
+        capteurList.add(luxSalon2);
+        capteurList.add(luxVeranda1);
+        capteurList.add(luxVeranda2);
+        capteurList.add(tempCave1);
+        capteurList.add(tempCave2);
+        capteurList.add(tempCheminee);
+        capteurList.add(tempSalon);
+        capteurList.add(tempTerasse1);
+        capteurList.add(tempTerasse2);
     }
 
     //TODO Génération des flux PAR capteur dans un Thread #15
@@ -94,7 +116,7 @@ public class GenCapteursController {
 
             //On crée notre datagramme
             InetAddress adresse = InetAddress.getByName(ipDest);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portEnvoi);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portDest);
 
             //On lui affecte les données à envoyer
             packet.setData(buffer);

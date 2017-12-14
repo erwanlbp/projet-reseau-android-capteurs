@@ -19,8 +19,21 @@ public abstract class Capteur implements HandleData {
         this.activated = activated;
     }
 
+    public static Capteur fromSnapshot(DataSnapshot dataSnapshot) {
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            if (ds.getValue().equals(Type.LIGHT.toString())) {
+                return dataSnapshot.getValue(LightCapteur.class);
+            }
+            if (ds.getValue().equals(Type.TEMPERATURE.toString())) {
+                return dataSnapshot.getValue(TemperatureCapteur.class);
+            }
+        }
+        System.out.println("Classe de capteur inconnue");
+        return null;
+    }
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -43,23 +56,11 @@ public abstract class Capteur implements HandleData {
         this.activated = activated;
     }
 
-    public static Capteur fromSnapshot(DataSnapshot dataSnapshot) {
-        switch (dataSnapshot.getKey()) {
-            case "LightCapteur":
-                return dataSnapshot.getValue(LightCapteur.class);
-            case "TemperatureCapteur":
-                return dataSnapshot.getValue(TemperatureCapteur.class);
-            default:
-                System.out.println("Classe de capteur inconnue");
-                return null;
-        }
-    }
-
     protected double getFromRange(double data, double percent) {
         Random r = new Random();
         double min = data - (data * percent);
         double max = data + (data * percent);
-        return min + (max - min) * r.nextDouble();
+        return Math.floor((min + (max - min) * r.nextDouble()) * 100) / 100;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package fr.eisti.smarthouse.presenter;
 
-import fr.eisti.smarthouse.model.Capteur;
 import fr.eisti.smarthouse.provider.FirebaseCapteurProvider;
 import fr.eisti.smarthouse.view.fragment.EditCapteurFragment;
 
@@ -13,11 +12,6 @@ public class EditCapteurPresenter {
 
     public EditCapteurPresenter(EditCapteurFragment fragment) {
         this.fragment = fragment;
-    }
-
-    public void save(String name, String type, boolean activ) {
-        Capteur capteur = new Capteur(name, type, activ);
-        FirebaseCapteurProvider.save(fragment.getActivity(), capteur);
     }
 
     public void findInfos(String capteurName) {
