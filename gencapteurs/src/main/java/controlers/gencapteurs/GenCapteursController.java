@@ -20,27 +20,27 @@ public class GenCapteursController {
     private static final int SLEEP_TIME = 500;
 
     private String ipDest;
-    private int portEnvoi;
-    private int portEcoute;
+    private int portDest;
+    private int portListen;
     private List<Capteur> capteurList;
     private ObjectMapper objectMapper;
 
-    public GenCapteursController(String ipDest, int portEnvoi, int portEcoute) {
-        this.portEnvoi = portEnvoi;
-        this.portEcoute = portEcoute;
+    public GenCapteursController(String ipDest, int portDest, int portListen) {
+        this.portDest = portDest;
+        this.portListen = portListen;
         this.objectMapper = new ObjectMapper();
         this.ipDest = ipDest;
     }
 
     public void start() {
-        new SendConfig().send(portEnvoi, portEcoute, ipDest);
+        new SendConfig().send(portDest, portListen, ipDest);
         initCatpeurs();
         initStartStopCapteurControler();
         generateFlux();
     }
 
     private void initStartStopCapteurControler() {
-        StartStopCapteurController startStopCapteurController = new StartStopCapteurController(portEcoute, capteurList);
+        StartStopCapteurController startStopCapteurController = new StartStopCapteurController(portListen, capteurList);
         Thread thread = new Thread(startStopCapteurController::receptionStartStopFlux);
         thread.start();
     }
@@ -58,7 +58,7 @@ public class GenCapteursController {
         TemperatureCapteur tempCave2 = new TemperatureCapteur("Cave 2", Type.TEMPERATURE, true, 4);
         TemperatureCapteur tempTerasse1 = new TemperatureCapteur("Terasse 1", Type.TEMPERATURE, true, -5);
         TemperatureCapteur tempTerasse2 = new TemperatureCapteur("Terasse 2", Type.TEMPERATURE, true, -6);
-        TemperatureCapteur tempCheminee = new TemperatureCapteur("Cheminée", Type.TEMPERATURE, true, 28);
+        TemperatureCapteur tempCheminee = new TemperatureCapteur("Cheminee", Type.TEMPERATURE, true, 28);
         TemperatureCapteur tempSalon = new TemperatureCapteur("Salon", Type.TEMPERATURE, true, 20);
 
         capteurList.add(luxCave1);
@@ -114,7 +114,7 @@ public class GenCapteursController {
 
             //On crée notre datagramme
             InetAddress adresse = InetAddress.getByName(ipDest);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portEnvoi);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresse, portDest);
 
             //On lui affecte les données à envoyer
             packet.setData(buffer);
