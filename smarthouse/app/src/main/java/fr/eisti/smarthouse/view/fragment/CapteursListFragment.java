@@ -86,7 +86,7 @@ public class CapteursListFragment extends Fragment implements AdapterView.OnItem
 
         if (requestCode == ACTIONS_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             String sentence = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0);
-            
+
             presenter.vocalActivateCapteur(sentence, adapter);
         }
     }
