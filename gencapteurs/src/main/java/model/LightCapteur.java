@@ -17,7 +17,7 @@ public class LightCapteur extends Capteur {
 
     @Override
     public double generateData() {
-        data = getFromRange(data, 0.2);
+        data = getFromRange(data, 3);
         return data;
     }
 

@@ -56,10 +56,10 @@ public abstract class Capteur implements HandleData {
         this.activated = activated;
     }
 
-    protected double getFromRange(double data, double percent) {
+    protected double getFromRange(double data, double marge) {
         Random r = new Random();
-        double min = data - (data * percent);
-        double max = data + (data * percent);
+        double min = data - marge;
+        double max = data + marge;
         return Math.floor((min + (max - min) * r.nextDouble()) * 100) / 100;
     }
 

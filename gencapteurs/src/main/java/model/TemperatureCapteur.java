@@ -17,7 +17,7 @@ public class TemperatureCapteur extends Capteur {
 
     @Override
     public double generateData() {
-        data = getFromRange(data, 0.1);
+        data = getFromRange(data, 0.3);
         return data;
     }
 
