@@ -1,5 +1,6 @@
 package fr.eisti.smarthouse.presenter;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,16 +39,13 @@ public class CapteursListPresenter {
     }
 
     public void vocalActivateCapteur(String sentence, CapteursListAdapter adapter) {
-        Toast errorToast = Toast.makeText(fragment.getActivity().getApplicationContext(),
-                "Votre phrase doit contenir : active/activer/désactive/désactiver et numéro index", Toast.LENGTH_LONG);
+        Toast errorToast = Toast.makeText(fragment.getActivity().getApplicationContext(), "Votre phrase doit contenir : active/activer/désactive/désactiver et numéro index", Toast.LENGTH_LONG);
 
         if (isValid(sentence)) {
             Map<String, String> map = getWords(sentence);
 
             String index = map.get("index");
             String value = map.get("activated");
-
-            System.out.println("#####" + value);
 
             if (index != null) {
                 Boolean activated;
@@ -72,17 +70,19 @@ public class CapteursListPresenter {
                 return;
             }
         }
+        Log.i("#####", sentence);
+
 
         errorToast.show();
     }
 
     private boolean isValid(String sentence) {
         //Espaces faits exprès
-        return ((sentence.contains(" active ") ||
-                sentence.contains(" désactive ") ||
-                sentence.contains(" activer ") ||
-                sentence.contains(" désactiver ")) &&
-                sentence.contains(" numéro "));
+        return ((sentence.contains("active ") ||
+                sentence.contains("désactive ") ||
+                sentence.contains("activer ") ||
+                sentence.contains("désactiver ")) &&
+                sentence.contains("numéro "));
     }
 
     private Map<String, String> getWords(String sentence) {
