@@ -4,6 +4,9 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.Random;
 
+/**
+ * Classe de données
+ */
 public abstract class Capteur implements HandleData {
 
     private String name;
