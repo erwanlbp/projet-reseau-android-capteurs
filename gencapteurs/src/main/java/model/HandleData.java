@@ -7,13 +7,15 @@ public interface HandleData {
 
     /**
      * Genere les données random.
-     * @return
+     *
+     * @return la data
      */
     double generateData();
 
     /**
      * Retourne la valeur de la données du capteur.
-     * @return
+     *
+     * @return la data
      */
     double getData();
 }

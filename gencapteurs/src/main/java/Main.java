@@ -3,9 +3,17 @@ import com.google.common.base.Strings;
 import controlers.dbinterface.DBInterfaceController;
 import controlers.gencapteurs.GenCapteursController;
 
-public class Main {
+/**
+ * le point d'entrée.
+ */
+public abstract class Main {
 
-    public static void main(String[] args) {
+    /**
+     * A ton avis?
+     *
+     * @param args les arguments
+     */
+    public static void main(final String[] args) {
         Option option = new Option();
         JCommander commander = JCommander.newBuilder()
             .addObject(option)
