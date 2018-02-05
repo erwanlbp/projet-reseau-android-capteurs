@@ -11,55 +11,57 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
-  Class that communicates with Firebase.
+ * Class that communicates with Firebase.
  */
 public final class FirebaseClient {
 
     /**
-     * Firebase project URL
+     * Firebase project URL.
      */
     private static final String FIREBASE_URL = "https://smarthouse-31e81.firebaseio.com";
-
     /**
-     * Database reference
+     * Instance of the class.
+     */
+    private static FirebaseClient instance;
+    /**
+     * Database reference.
      */
     private DatabaseReference db;
 
     /**
-     * Instance of the class
-     */
-    private static FirebaseClient instance;
-
-    /**
-     * Constructor that gets Firebase credentials and init
-     * @throws IOException IOException
+     * Constructor that gets Firebase credentials and init.
+     *
+     * @throws IOException          IOException
      * @throws InterruptedException InterruptedException
      */
     private FirebaseClient() throws IOException, InterruptedException {
         InputStream serviceAccount = this.getClass().getClassLoader().getResourceAsStream("smarthouse-credentials.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
-                .setDatabaseUrl(FIREBASE_URL)
-                .build();
+            .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+            .setDatabaseUrl(FIREBASE_URL)
+            .build();
 
         FirebaseApp.initializeApp(options);
     }
 
     /**
-     * Get the class instance
+     * Get the class instance.
+     *
      * @return FirebaseClient
-     * @throws IOException gdsgds
+     * @throws IOException          gdsgds
      * @throws InterruptedException gdsgds
      */
     public static FirebaseClient getInstance() throws IOException, InterruptedException {
-        if (instance == null)
+        if (instance == null) {
             instance = new FirebaseClient();
+        }
         return instance;
     }
 
     /**
-     * Add a capteur to "capteurs" node into Firebase
+     * Add a capteur to "capteurs" node into Firebase.
+     *
      * @param capteur Capteur to send
      */
     public void sendCapteur(final Capteur capteur) {
@@ -68,7 +70,8 @@ public final class FirebaseClient {
     }
 
     /**
-     * Insert data to the "data" node into Firebase
+     * Insert data to the "data" node into Firebase.
+     *
      * @param capteur Capteur for which we need sens the data
      */
     public void sendData(final Capteur capteur) {
@@ -77,7 +80,8 @@ public final class FirebaseClient {
     }
 
     /**
-     * Swich capteur attribute into Firebase when a start or stop command is received
+     * Swich capteur attribute into Firebase when a start or stop command is received.
+     *
      * @param startStopCallback callback
      */
     public void listenStartStop(final StartStopCallback startStopCallback) {

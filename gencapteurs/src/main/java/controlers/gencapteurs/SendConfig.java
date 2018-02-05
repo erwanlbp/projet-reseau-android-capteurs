@@ -3,9 +3,17 @@ package controlers.gencapteurs;
 import java.net.*;
 import java.util.Enumeration;
 
+/**
+ * L'envoi de la config sur le reseau.
+ */
 public class SendConfig {
-
-    public void send(int portDest, int portListen, String ipDest, String netInterfaceName) {
+    /**
+     * @param portDest         le port de destination
+     * @param portListen       Le port d'écoute
+     * @param ipDest           L'ip de destination
+     * @param netInterfaceName Le nom de l'interface
+     */
+    public void send(final int portDest, final int portListen, final String ipDest, final String netInterfaceName) {
 
         String ipGenCapteur = getIpAdress(netInterfaceName);
 
@@ -32,8 +40,12 @@ public class SendConfig {
         }
     }
 
+    /**
+     * @param netInterfaceName Le nom de l'interface
+     * @return L'ip vers laquelle envoyer
+     */
     //TODO to improve
-    private String getIpAdress(String netInterfaceName) {
+    private String getIpAdress(final String netInterfaceName) {
         boolean isETH0 = false;
 
         try {
@@ -46,10 +58,12 @@ public class SendConfig {
 
                 while (listAddress.hasMoreElements()) {
                     InetAddress address = listAddress.nextElement();
-                    if (isETH0)
+                    if (isETH0) {
                         return address.getHostAddress();
-                    if (address.getHostAddress().contains(netInterfaceName))
+                    }
+                    if (address.getHostAddress().contains(netInterfaceName)) {
                         isETH0 = true;
+                    }
                 }
             }
         } catch (SocketException e) {
