@@ -13,27 +13,68 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Pour lancer le programme en mode réseau de capteur.
+ */
 public class GenCapteursController {
 
+    /**
+     * Le taux d'envoi de données pour light.
+     */
     private static final int ITERATION_LIGHT_CAPTEUR = 3;
+    /**
+     * Le taux d'envoi de données pour temperature.
+     */
     private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
+    /**
+     * Le temps de pause entre les envoi de données.
+     */
     private static final int SLEEP_TIME = 500;
 
+    /**
+     * L'ip vers qui envoyer les data.
+     */
     private String ipDest;
+    /**
+     * Le port de destination des data.
+     */
     private int portDest;
+    /**
+     * Le port d'écoute des message start stop.
+     */
     private int portListen;
+    /**
+     * Le pattern pour savoir sur quel interface parler.
+     */
     private String networkInterfaceName;
+    /**
+     * La liste des capteurs.
+     */
     private List<Capteur> capteurList;
+    /**
+     * Pour formatter et parser les capteurs en JSON.
+     */
     private ObjectMapper objectMapper;
 
-    public GenCapteursController(String ipDest, int portDest, int portListen, String networkInterfaceName) {
-        this.portDest = portDest;
-        this.portListen = portListen;
+    /**
+     * Constructeur à utiliser.
+     *
+     * @param pipDest               L'ip de destination
+     * @param pportDest             Le port de destination
+     * @param pportListen           Le port d'écoute
+     * @param pnetworkInterfaceName L'interface sur laquelle parler
+     */
+    public GenCapteursController(final String pipDest, final int pportDest, final int pportListen, final String pnetworkInterfaceName) {
+        this.portDest = pportDest;
+        this.portListen = pportListen;
         this.objectMapper = new ObjectMapper();
-        this.ipDest = ipDest;
-        this.networkInterfaceName = networkInterfaceName;
+        this.ipDest = pipDest;
+        this.networkInterfaceName = pnetworkInterfaceName;
     }
 
+    /**
+     * Pour lancer le mode.
+     */
     public void start() {
         new SendConfig().send(portDest, portListen, ipDest, networkInterfaceName);
         initCatpeurs();
@@ -41,42 +82,31 @@ public class GenCapteursController {
         generateFlux();
     }
 
+    /**
+     * Pour initialiser le start/stop.
+     */
     private void initStartStopCapteurControler() {
         StartStopCapteurController startStopCapteurController = new StartStopCapteurController(portListen, capteurList);
         Thread thread = new Thread(startStopCapteurController::receptionStartStopFlux);
         thread.start();
     }
 
+    /**
+     * Pour initialiser les capteurs du réseau.
+     */
     private void initCatpeurs() {
         capteurList = new ArrayList<>();
 
         LightCapteur luxCave1 = new LightCapteur("Cave 1", Type.LIGHT, true, 500);
-        LightCapteur luxCave2 = new LightCapteur("Cave 2", Type.LIGHT, true, 400);
-        LightCapteur luxSalon1 = new LightCapteur("Salon 1", Type.LIGHT, true, 1300);
-        LightCapteur luxSalon2 = new LightCapteur("salon 2", Type.LIGHT, true, 1300);
-        LightCapteur luxVeranda1 = new LightCapteur("Veranda 1", Type.LIGHT, true, 1800);
-        LightCapteur luxVeranda2 = new LightCapteur("Veranda 2", Type.LIGHT, true, 2000);
         TemperatureCapteur tempCave1 = new TemperatureCapteur("Cave 1", Type.TEMPERATURE, true, 5);
-        TemperatureCapteur tempCave2 = new TemperatureCapteur("Cave 2", Type.TEMPERATURE, true, 4);
-        TemperatureCapteur tempTerasse1 = new TemperatureCapteur("Terasse 1", Type.TEMPERATURE, true, -5);
-        TemperatureCapteur tempTerasse2 = new TemperatureCapteur("Terasse 2", Type.TEMPERATURE, true, -6);
-        TemperatureCapteur tempCheminee = new TemperatureCapteur("Cheminee", Type.TEMPERATURE, true, 28);
-        TemperatureCapteur tempSalon = new TemperatureCapteur("Salon", Type.TEMPERATURE, true, 20);
 
         capteurList.add(luxCave1);
-        capteurList.add(luxCave2);
-        capteurList.add(luxSalon1);
-        capteurList.add(luxSalon2);
-        capteurList.add(luxVeranda1);
-        capteurList.add(luxVeranda2);
         capteurList.add(tempCave1);
-        capteurList.add(tempCave2);
-        capteurList.add(tempCheminee);
-        capteurList.add(tempSalon);
-        capteurList.add(tempTerasse1);
-        capteurList.add(tempTerasse2);
     }
 
+    /**
+     * Pour lancer la boucle de génération des flux.
+     */
     //TODO Génération des flux PAR capteur dans un Thread #15
     private void generateFlux() {
         int i = 0;
@@ -86,10 +116,12 @@ public class GenCapteursController {
                 for (Capteur capteur : capteurList) {
                     if (capteur.isActivated()) {
                         capteur.generateData();
-                        if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0)
+                        if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0) {
                             sendFlux(capteur);
-                        if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0)
+                        }
+                        if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0) {
                             sendFlux(capteur);
+                        }
                     }
                 }
                 i++;
@@ -100,7 +132,12 @@ public class GenCapteursController {
         }
     }
 
-    private void sendFlux(Capteur capteur) {
+    /**
+     * Pour envoyer un flux.
+     *
+     * @param capteur Le capteur à envoyer
+     */
+    private void sendFlux(final Capteur capteur) {
         String capteurJson = "";
         try {
             capteurJson = objectMapper.writeValueAsString(capteur);

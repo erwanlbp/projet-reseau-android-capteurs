@@ -6,52 +6,52 @@ import com.beust.jcommander.Parameter;
 public class Option {
 
     /**
-     * Parametre aide
+     * Parametre aide.
      */
     @Parameter(names = {"-h", "--help"}, help = true, description = "Affiche l'aide")
     private boolean help;
 
     /**
-     * Param ip de firebase
+     * Param ip de firebase.
      */
     @Parameter(names = {"-ip", "--ip-firebase"}, description = "ip du routeur de destination vers firebase")
     private String ipFirebase = "";
 
     /**
-     * Param port de destination
+     * Param port de destination.
      */
     @Parameter(names = {"-pd", "--port-destination"}, description = "port de destination des packets UDP")
     private int portDest = -1;
 
     /**
-     * Param port d'écoute
+     * Param port d'écoute.
      */
     @Parameter(names = {"-pl", "--port-listen"}, description = "port d'écoute du serveur")
     private int portListen = -1;
 
     /**
-     * Param start mode
+     * Param start mode.
      */
     @Parameter(names = {"-m", "--start-mode"}, description = "Mode de lancement [gen-capteur, db-interface]")
     private String startMode = "";
 
     /**
-     * Param network name
+     * Param network name.
      */
     @Parameter(names = {"-nin", "--network-interface-name"}, description = "Identifiant de l'interface reseau")
     private String networkInterfaceName;
 
     /**
-     * Retourne ip firebase
+     * Retourne ip firebase.
      *
-     * @return
+     * @return l'IP firebase
      */
     public String getIpFirebase() {
         return ipFirebase;
     }
 
     /**
-     * set ip firebase
+     * set ip firebase.
      *
      * @param pIpFirebase string avec l'ip
      */
@@ -67,7 +67,7 @@ public class Option {
     }
 
     /**
-     * Set le port d'écoute
+     * Set le port d'écoute.
      *
      * @param pPortDest port écoute
      */
@@ -83,7 +83,7 @@ public class Option {
     }
 
     /**
-     * Set port d'écoute
+     * Set port d'écoute.
      *
      * @param pPortListen port d'écoute
      */
@@ -92,7 +92,7 @@ public class Option {
     }
 
     /**
-     * Gen start mode
+     * Gen start mode.
      *
      * @return start mode
      */
@@ -101,7 +101,7 @@ public class Option {
     }
 
     /**
-     * Set start mode
+     * Set start mode.
      *
      * @param mMode mode
      */
@@ -110,7 +110,7 @@ public class Option {
     }
 
     /**
-     * Get help
+     * Get help.
      *
      * @return help
      */
@@ -119,7 +119,7 @@ public class Option {
     }
 
     /**
-     * Get help
+     * Get help.
      *
      * @param hHelp help
      */
@@ -128,16 +128,16 @@ public class Option {
     }
 
     /**
-     * Get network
+     * Get network.
      *
-     * @return
+     * @return le nom de l'interface
      */
     public String getNetworkInterfaceName() {
         return networkInterfaceName;
     }
 
     /**
-     * set network
+     * set network.
      *
      * @param mNetworkInterfaceName network
      */

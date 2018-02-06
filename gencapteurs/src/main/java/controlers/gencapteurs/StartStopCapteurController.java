@@ -7,16 +7,31 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.List;
 
+/**
+ * L'écoute des start stop message.
+ */
 public class StartStopCapteurController {
-
+    /**
+     * Le port d'écoute des start stop.
+     */
     private int portListen;
+    /**
+     * La liste des capteurs pour les stopper.
+     */
     private List<Capteur> capteurList;
 
-    public StartStopCapteurController(int portListen, List<Capteur> capteurList) {
-        this.portListen = portListen;
-        this.capteurList = capteurList;
+    /**
+     * @param pportListen  Le port d'écoute
+     * @param pcapteurList La liste des capteurs
+     */
+    public StartStopCapteurController(final int pportListen, final List<Capteur> pcapteurList) {
+        this.portListen = pportListen;
+        this.capteurList = pcapteurList;
     }
 
+    /**
+     * Boucle de réception des messages.
+     */
     public void receptionStartStopFlux() {
         DatagramSocket client;
 
@@ -40,7 +55,12 @@ public class StartStopCapteurController {
         }
     }
 
-    private void startStopCapteur(String s) {
+    /**
+     * Start stop un capteur en fonction du message.
+     *
+     * @param s Le message
+     */
+    private void startStopCapteur(final String s) {
         for (Capteur c : capteurList) {
             if (s.contains(c.getName())) {
                 if (s.contains("true")) {
