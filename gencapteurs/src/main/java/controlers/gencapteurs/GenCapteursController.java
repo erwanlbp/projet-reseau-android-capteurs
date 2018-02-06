@@ -25,7 +25,7 @@ public class GenCapteursController {
     /**
      * Le taux d'envoi de données pour temperature.
      */
-    private static final int ITERATION_TEMPERATURE_CAPTEUR = 1;
+    private static final int ITERATION_TEMPERATURE_CAPTEUR = 2;
     /**
      * Le temps de pause entre les envoi de données.
      */
@@ -119,7 +119,7 @@ public class GenCapteursController {
                         if (capteur instanceof LightCapteur && i % ITERATION_LIGHT_CAPTEUR == 0) {
                             sendFlux(capteur);
                         }
-                        if (capteur instanceof TemperatureCapteur && i % ITERATION_TEMPERATURE_CAPTEUR == 0) {
+                        if ((capteur instanceof TemperatureCapteur) && (i % ITERATION_TEMPERATURE_CAPTEUR == 0)) {
                             sendFlux(capteur);
                         }
                     }

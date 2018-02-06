@@ -132,7 +132,7 @@ public class DBInterfaceController {
             FirebaseClient.getInstance().sendData(capteur);
         } else {
             String[] bufferSplitted = s.split(":");
-            NetworkConfig.getInstance().setPortDestGenCapteurs(Integer.valueOf(bufferSplitted[0]));
+            NetworkConfig.getInstance().setPortDestGenCapteurs(Integer.parseInt(bufferSplitted[0]));
             NetworkConfig.getInstance().setIpDestGenCapteurs(bufferSplitted[1]);
             System.out.println("Config received !!!");
         }
