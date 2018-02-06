@@ -24,30 +24,58 @@ public abstract class Main {
             commander.usage();
             return;
         }
-        if (!option.getStartMode().equals("gen-capteur") && !option.getStartMode().equals("db-interface")) {
-            System.out.println("start mode can only be gen-capteur or db-interface");
-            System.exit(1);
-        }
+
+        checkMode(option.getStartMode());
 
         if (option.getStartMode().equals("gen-capteur")) {
-            if (Strings.isNullOrEmpty(option.getIpFirebase()) || option.getPortDest() <= 0 || option.getPortListen() <= 0 || Strings.isNullOrEmpty(option.getNetworkInterfaceName())) {
-                System.out.println("gen-capteur needs Firbase ip, port destination and port listen");
-                System.exit(1);
-            }
+            checkForGenCapteur(option);
             new GenCapteursController(option.getIpFirebase(), option.getPortDest(), option.getPortListen(), option.getNetworkInterfaceName()).start();
         }
 
         if (option.getStartMode().equals("db-interface")) {
-            if (option.getPortListen() <= 0) {
-                System.out.println("db-interface needs port listen");
-                System.exit(1);
-            }
+            checkDBInterface(option);
             try {
                 new DBInterfaceController(option.getPortListen()).init();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
             }
+        }
+    }
+
+    /**
+     * Check les options pour lancer en db-interface.
+     *
+     * @param option Les options
+     */
+    private static void checkDBInterface(final Option option) {
+        if (option.getPortListen() <= 0) {
+            System.out.println("db-interface needs port listen");
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Check les options pour lancer en gen-capteur.
+     *
+     * @param option les options
+     */
+    private static void checkForGenCapteur(final Option option) {
+        if (Strings.isNullOrEmpty(option.getIpFirebase()) || option.getPortDest() <= 0 || option.getPortListen() <= 0 || Strings.isNullOrEmpty(option.getNetworkInterfaceName())) {
+            System.out.println("gen-capteur needs Firbase ip, port destination and port listen");
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Check le mode.
+     *
+     * @param mode mode de lancement
+     */
+    private static void checkMode(final String mode) {
+        if (!mode.equals("gen-capteur") && !mode.equals("db-interface")) {
+            System.out.println("start mode can only be gen-capteur or db-interface");
+            System.exit(1);
         }
     }
 }
