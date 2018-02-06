@@ -8,16 +8,19 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 
 import fr.eisti.smarthouse.presenter.EditCapteurPresenter;
 import fr.eisti.smarthouse.view.activity.EditCapteurActivity;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by ErwanLBP on 05/02/18.
@@ -31,7 +34,6 @@ public class EditCapteurTest {
 
     @BeforeClass
     public void init() {
-        EditCapteurPresenter presenter = Mockito.mock(EditCapteurPresenter.class);
     }
 
     @Test
@@ -45,9 +47,13 @@ public class EditCapteurTest {
         onView(withId(R.id.fec_type_capteur)).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void switchActiv() {
-//
-//    onView(withId(R.id.fec_activ_capteur)).perform(click()).check()
-//    }
+    @Test
+    public void switchActiv() {
+        EditCapteurPresenter presenter = mock(EditCapteurPresenter.class);
+
+        when(presenter.findInfos("foo")).then()
+        onView(withId(R.id.fec_activ_capteur)).perform(click()).check()
+
+        verify(presenter).activateCapteur();
+    }
 }
