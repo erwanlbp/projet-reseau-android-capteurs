@@ -1,8 +1,5 @@
 package fr.eisti.smarthouse.provider;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,8 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.eisti.smarthouse.model.Capteur;
-import fr.eisti.smarthouse.provider.callback.FirebaseFindAllCallback;
-import fr.eisti.smarthouse.provider.callback.FirebaseFindOneCallback;
 
 /**
  * Created by ErwanLBP on 20/11/17.
@@ -27,7 +22,7 @@ public class FirebaseCapteurProvider {
     private static final String NODE_CAPTEURS = "capteurs";
     private static final String NODE_DATAS = "data";
 
-    public static void findAll(final Context context, final FirebaseFindAllCallback ffac) {
+    public static void findAll(final ErrorCallback ec, final FirebaseFindAllCallback ffac) {
         FirebaseDatabase.getInstance().getReference()
                 .child(NODE_CAPTEURS)
                 .addValueEventListener(new ValueEventListener() {
@@ -44,12 +39,12 @@ public class FirebaseCapteurProvider {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        ec.error(databaseError.getMessage());
                     }
                 });
     }
 
-    public static void findOne(final Context context, String capteurName, final FirebaseFindOneCallback ffoc) {
+    public static void findOne(final ErrorCallback ec, String capteurName, final FirebaseFindOneCallback ffoc) {
         FirebaseDatabase.getInstance().getReference()
                 .child(NODE_CAPTEURS)
                 .child(capteurName)
@@ -62,12 +57,12 @@ public class FirebaseCapteurProvider {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        ec.error(databaseError.getMessage());
                     }
                 });
     }
 
-    public static void switchActiv(Context context, String capteurName, boolean activ) {
+    public static void switchActiv(final ErrorCallback ec, String capteurName, boolean activ) {
         if (capteurName == null) {
             return;
         }
@@ -76,11 +71,11 @@ public class FirebaseCapteurProvider {
                 .child(NODE_CAPTEURS)
                 .child(capteurName)
                 .updateChildren(Collections.singletonMap(Capteur.ACTIV, activ))
-                .addOnFailureListener(e -> Toast.makeText(context, "switch failure for " + capteurName, Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> ec.error("switch failure for " + capteurName));
 
     }
 
-    public static void findAllDatas(final Context context, final String capteurName, final FirebaseFindAllDataCallback ffac) {
+    public static void findAllDatas(final ErrorCallback ec, final String capteurName, final FirebaseFindAllDataCallback ffac) {
         FirebaseDatabase.getInstance().getReference()
                 .child(NODE_DATAS)
                 .child(capteurName)
@@ -92,22 +87,22 @@ public class FirebaseCapteurProvider {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        Toast.makeText(context, "Child changed not implemented", Toast.LENGTH_SHORT).show();
+                        ec.error("Child changed not implemented");
                     }
 
                     @Override
                     public void onChildRemoved(DataSnapshot dataSnapshot) {
-                        Toast.makeText(context, "Child removed not implemented", Toast.LENGTH_SHORT).show();
+                        ec.error("Child removed not implemented");
                     }
 
                     @Override
                     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                        Toast.makeText(context, "Child moved not implemented", Toast.LENGTH_SHORT).show();
+                        ec.error("Child moved not implemented");
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        ec.error(databaseError.getMessage());
                     }
                 });
     }
@@ -116,4 +111,20 @@ public class FirebaseCapteurProvider {
     public interface FirebaseFindAllDataCallback {
         void addToList(Double datas);
     }
+
+    @FunctionalInterface
+    public interface ErrorCallback {
+        void error(String msg);
+    }
+
+    @FunctionalInterface
+    public interface FirebaseFindAllCallback {
+        void populate(List<Capteur> capteurs);
+    }
+
+    @FunctionalInterface
+    public interface FirebaseFindOneCallback {
+        void populate(Capteur capteur);
+    }
+
 }

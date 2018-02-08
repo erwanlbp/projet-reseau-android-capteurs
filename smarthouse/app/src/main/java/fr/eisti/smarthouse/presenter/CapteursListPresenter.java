@@ -27,7 +27,7 @@ public class CapteursListPresenter {
     }
 
     public void fillCapteursList() {
-        FirebaseCapteurProvider.findAll(fragment.getActivity().getApplicationContext(), (l) -> fragment.fillCapteursList(l));
+        FirebaseCapteurProvider.findAll((m) -> fragment.error(m), (l) -> fragment.fillCapteursList(l));
     }
 
     public void itemClicked(View view) {
@@ -35,7 +35,7 @@ public class CapteursListPresenter {
     }
 
     public void activateCapteur(String capteurName, boolean activ) {
-        FirebaseCapteurProvider.switchActiv(fragment.getActivity(), capteurName, activ);
+        FirebaseCapteurProvider.switchActiv((m) -> fragment.error(m), capteurName, activ);
     }
 
     public void vocalActivateCapteur(String sentence, CapteursListAdapter adapter) {

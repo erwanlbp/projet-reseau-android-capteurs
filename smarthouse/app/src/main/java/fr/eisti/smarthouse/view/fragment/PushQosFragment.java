@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.eisti.smarthouse.R;
 import fr.eisti.smarthouse.presenter.PushQosPresenter;
@@ -82,5 +83,9 @@ public class PushQosFragment extends Fragment implements View.OnClickListener {
             default:
                 Snackbar.make(drawerLayout, "Not implemented", Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    public void error(String msg) {
+        Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

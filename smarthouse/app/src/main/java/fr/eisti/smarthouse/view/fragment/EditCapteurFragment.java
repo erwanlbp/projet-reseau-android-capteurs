@@ -60,4 +60,8 @@ public class EditCapteurFragment extends Fragment {
         tvType.setText(capteur.getType());
         switchActiv.setChecked(capteur.isActivated());
     }
+
+    public void error(String msg) {
+        Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 }
