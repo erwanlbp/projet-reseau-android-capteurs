@@ -31,7 +31,7 @@ public class CapteursListPresenter {
     }
 
     public void itemClicked(View view) {
-        fragment.startEditActivity(((TextView) view.findViewById(R.id.fcli_name_capteur)).getText().toString());
+        fragment.startEditActivity(view.findViewById(R.id.fcli_name_capteur).toString());
     }
 
     public void activateCapteur(String capteurName, boolean activ) {
