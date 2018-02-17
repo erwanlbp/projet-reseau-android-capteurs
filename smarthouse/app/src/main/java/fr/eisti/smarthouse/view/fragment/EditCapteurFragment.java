@@ -32,9 +32,13 @@ public class EditCapteurFragment extends Fragment {
 
     public static EditCapteurFragment newInstance(String capteurName) {
         EditCapteurFragment fragment = new EditCapteurFragment();
-        fragment.presenter = new EditCapteurPresenter(fragment);
+        fragment.setPresenter(new EditCapteurPresenter(fragment));
         fragment.capteurName = capteurName;
         return fragment;
+    }
+
+    public void setPresenter(EditCapteurPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override

@@ -15,10 +15,10 @@ public class EditCapteurPresenter {
     }
 
     public void findInfos(String capteurName) {
-        FirebaseCapteurProvider.findOne((m)->fragment.error(m), capteurName, (c) -> fragment.fillFrom(c));
+        FirebaseCapteurProvider.findOne((m) -> fragment.error(m), capteurName, (c) -> fragment.fillFrom(c));
     }
 
     public void activateCapteur(String capteurName, boolean activ) {
-        FirebaseCapteurProvider.switchActiv((m)->fragment.error(m), capteurName, activ);
+        FirebaseCapteurProvider.switchActiv((m) -> fragment.error(m), capteurName, activ);
     }
 }
